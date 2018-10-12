@@ -27,7 +27,7 @@ public class Test {
             
             // Conecta con la base de datos XE con el usuario system y la contraseña password
             cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:portafolio", "portafolio", "admin");
-            String usuario = "semadrid";
+            String usuario = "admin";
             CallableStatement cst = cn.prepareCall("{call VERIFICARLOGINAPP (?,?)}");
             cst.setString(1, usuario);
             cst.registerOutParameter(2, java.sql.Types.VARCHAR);
