@@ -29,7 +29,7 @@ public class Conexion {
 
     public Conexion() throws SQLException{
         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-        cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "hr", "admin");
+        cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "portafolio", "admin");
     }
     //ALUMNO
     public int insertAlumno(Alumno alumno)
