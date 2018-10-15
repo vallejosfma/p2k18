@@ -279,7 +279,7 @@ public class Main extends javax.swing.JFrame {
         }
         else
         {
-            txtError.setText("Error de Contraseña");
+            txtError.setText("Error de Datos");
             txtError.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed

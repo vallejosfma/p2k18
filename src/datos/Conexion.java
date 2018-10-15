@@ -347,41 +347,7 @@ public class Conexion {
         return flag;
     }
     
-    //NotasHistoricas   
-    public int insertNotasHistoricas(NotasHistoricas notasHistoricas)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call INSERTnotas_historicas (?,?,?)} ");
-            cst.setInt(1, notasHistoricas.getId_calificacion());
-            cst.setInt(2, notasHistoricas.getNota());
-            cst.setInt(3, notasHistoricas.getId_asignatura());
-
-
-            flag= cst.executeUpdate();
-
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-     
-    public int updateNotasHistoricas(NotasHistoricas notasHistoricas)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEnotas_historicas (?,?,?)} ");
-            cst.setInt(1, notasHistoricas.getId_calificacion());
-            cst.setInt(2, notasHistoricas.getNota());
-            cst.setInt(3, notasHistoricas.getId_asignatura());
-            
-            flag= cst.executeUpdate();
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
+    
     //Pais
     public int insertPais(Pais pais)
     {
