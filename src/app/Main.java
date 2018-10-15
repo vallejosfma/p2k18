@@ -12,7 +12,13 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Prueba 
+ * @author Prueba 2  
+ * 
+ * 
+ * 
+ * 
+ * 
+ * fin
  */
 public class Main extends javax.swing.JFrame {
 
