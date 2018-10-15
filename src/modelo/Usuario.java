@@ -14,6 +14,15 @@ public class Usuario {
     private String usuario;
     private String contrasena;
     private int id_rol;
+    private int vigencia;
+
+    public int getVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(int vigencia) {
+        this.vigencia = vigencia;
+    }
 
     public Usuario(int id_usuario, String usuario, String cotnrasena, int id_rol) {
         this.id_usuario = id_usuario;
