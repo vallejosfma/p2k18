@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Seba PC
+ * @author Prueba 
  */
 public class Main extends javax.swing.JFrame {
 
