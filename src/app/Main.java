@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Prueba 2  
  * 
  * 
- * Martin prueba 1
+ * Martin prueba
  * 
  * 
  * fin
