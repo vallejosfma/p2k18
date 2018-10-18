@@ -456,15 +456,21 @@ public class Conexion {
     }
     
     //Rol
-        public int insertRol(Rol rol)
+        public int insertRol(Rol rol, String tipo)
     {
         int flag = 0;
+//        boolean res ;
+//        ResultSet resultado = null;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTrol (?,?)} ");
-            
-            cst.setInt(1, rol.getId_rol());
-            cst.setString(2, rol.getNombre_rol());
-            flag= cst.executeUpdate();
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?,?)} ");
+//            cst.registerOutParameter("R_ID",Types.INTEGER);
+//            cst.registerOutParameter("R_CODIGO",Types.INTEGER);
+//            cst.registerOutParameter("R_MENSAJE",Types.VARCHAR);
+            cst.setString("TIPO",tipo);
+            cst.setInt("p_ID_ROL",rol.getId_rol());
+            cst.setString("p_NOMBRE_ROL",rol.getNombre_rol());            
+            flag = cst.executeUpdate();
+//            resultado = cst.getResultSet();
 
         } catch (Exception ex) {
             return 0;

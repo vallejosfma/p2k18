@@ -6,9 +6,11 @@
 package app;
 
 import datos.Conexion;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Rol;
 
 /**
  *
@@ -31,6 +33,10 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         txtError.setVisible(false);
+        pPanelUsuario.setVisible(false);
+        pPanelRol.setVisible(false);
+        pPanelCentros.setVisible(false);
+        pCrearRol.setVisible(false);
     }
 
     /**
@@ -42,6 +48,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -60,7 +67,41 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        btnRoles = new javax.swing.JButton();
+        pProgramas = new javax.swing.JPanel();
+        pPanelUsuario = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        btnCrearUsuario = new javax.swing.JButton();
+        btnModificarUsuario = new javax.swing.JButton();
+        btnDeshabilitarUsuario = new javax.swing.JButton();
+        pPanelRol = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        btnRol = new javax.swing.JButton();
+        btnModificarRol = new javax.swing.JButton();
+        btnEliminarRol = new javax.swing.JButton();
+        pCrearRol = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtNombreRol = new javax.swing.JTextField();
+        btnCrearRol = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+        lblSuccess = new javax.swing.JLabel();
+        pPanelCentros = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        btnModificarCentro = new javax.swing.JButton();
+        btnEliminarCentro = new javax.swing.JButton();
+        btnCrearCentro = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -69,12 +110,18 @@ public class Main extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(800, 600));
 
         jPanel1.setBackground(new java.awt.Color(51, 204, 255));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1024, 500));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setText("Usuario");
 
         jLabel2.setText("Contraseña");
+
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
+            }
+        });
 
         btnLogin.setText("Entrar");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +152,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLogin))))
-                .addContainerGap(578, Short.MAX_VALUE))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,21 +206,29 @@ public class Main extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Generar Certificados");
 
+        btnRoles.setText("Administrar Roles");
+        btnRoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRolesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel11))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -195,21 +250,23 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
-                .addGap(108, 108, 108))
+                .addGap(18, 18, 18)
+                .addComponent(btnRoles)
+                .addGap(67, 67, 67))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pProgramas.setBackground(new java.awt.Color(204, 204, 255));
+        pProgramas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pProgramasLayout = new javax.swing.GroupLayout(pProgramas);
+        pProgramas.setLayout(pProgramasLayout);
+        pProgramasLayout.setHorizontalGroup(
+            pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 548, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        pProgramasLayout.setVerticalGroup(
+            pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 398, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -218,39 +275,305 @@ public class Main extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(pProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel3)
-                .addGap(46, 46, 46)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pProgramas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(88, Short.MAX_VALUE))
+        );
+
+        pPanelUsuario.setBackground(new java.awt.Color(51, 204, 255));
+        pPanelUsuario.setMinimumSize(new java.awt.Dimension(1024, 500));
+        pPanelUsuario.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel12.setText("Administrar Usuarios");
+
+        btnCrearUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCrearUsuario.setText("Crear Usuario");
+        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearUsuarioActionPerformed(evt);
+            }
+        });
+
+        btnModificarUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnModificarUsuario.setText("Modificar Usuario");
+
+        btnDeshabilitarUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnDeshabilitarUsuario.setText("Deshabilitar Usuario");
+
+        javax.swing.GroupLayout pPanelUsuarioLayout = new javax.swing.GroupLayout(pPanelUsuario);
+        pPanelUsuario.setLayout(pPanelUsuarioLayout);
+        pPanelUsuarioLayout.setHorizontalGroup(
+            pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelUsuarioLayout.createSequentialGroup()
+                .addGroup(pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPanelUsuarioLayout.createSequentialGroup()
+                        .addGap(326, 326, 326)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPanelUsuarioLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(btnCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeshabilitarUsuario)))
+                .addContainerGap(276, Short.MAX_VALUE))
+        );
+        pPanelUsuarioLayout.setVerticalGroup(
+            pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelUsuarioLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeshabilitarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(378, Short.MAX_VALUE))
+        );
+
+        pPanelRol.setBackground(new java.awt.Color(51, 204, 255));
+        pPanelRol.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelRol.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel14.setText("Administrar Roles");
+
+        btnRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnRol.setText("Crear Rol");
+        btnRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRolActionPerformed(evt);
+            }
+        });
+
+        btnModificarRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnModificarRol.setText("Modificar Rol");
+        btnModificarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarRolActionPerformed(evt);
+            }
+        });
+
+        btnEliminarRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnEliminarRol.setText("Eliminar Rol");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel16.setText("Roles");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel17.setText("Nombre del Rol");
+
+        btnCrearRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCrearRol.setText("Crear Rol");
+        btnCrearRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearRolActionPerformed(evt);
+            }
+        });
+
+        lblError.setForeground(new java.awt.Color(255, 0, 0));
+
+        lblSuccess.setForeground(new java.awt.Color(51, 255, 51));
+
+        javax.swing.GroupLayout pCrearRolLayout = new javax.swing.GroupLayout(pCrearRol);
+        pCrearRol.setLayout(pCrearRolLayout);
+        pCrearRolLayout.setHorizontalGroup(
+            pCrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pCrearRolLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(178, 178, 178))
+            .addGroup(pCrearRolLayout.createSequentialGroup()
+                .addGroup(pCrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pCrearRolLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pCrearRolLayout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addGroup(pCrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCrearRol, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSuccess, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+        pCrearRolLayout.setVerticalGroup(
+            pCrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pCrearRolLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pCrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pCrearRolLayout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pCrearRolLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(btnCrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSuccess, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pPanelRolLayout = new javax.swing.GroupLayout(pPanelRol);
+        pPanelRol.setLayout(pPanelRolLayout);
+        pPanelRolLayout.setHorizontalGroup(
+            pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelRolLayout.createSequentialGroup()
+                .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPanelRolLayout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(btnRol, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(btnModificarRol)
+                        .addGap(70, 70, 70)
+                        .addComponent(btnEliminarRol))
+                    .addGroup(pPanelRolLayout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPanelRolLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(pCrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(68, 68, 68))
+        );
+        pPanelRolLayout.setVerticalGroup(
+            pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelRolLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRol, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pCrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        pPanelCentros.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelCentros.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel15.setText("Administrar Centros");
+
+        btnModificarCentro.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnModificarCentro.setText("Modificar Centro");
+        btnModificarCentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarCentroActionPerformed(evt);
+            }
+        });
+
+        btnEliminarCentro.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnEliminarCentro.setText("Eliminar Centro");
+
+        btnCrearCentro.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCrearCentro.setText("Crear Centro");
+        btnCrearCentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCentroActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pPanelCentrosLayout = new javax.swing.GroupLayout(pPanelCentros);
+        pPanelCentros.setLayout(pPanelCentrosLayout);
+        pPanelCentrosLayout.setHorizontalGroup(
+            pPanelCentrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelCentrosLayout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(btnCrearCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificarCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminarCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelCentrosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(363, 363, 363))
+        );
+        pPanelCentrosLayout.setVerticalGroup(
+            pPanelCentrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelCentrosLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(pPanelCentrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrearCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(363, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 218, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 145, Short.MAX_VALUE)
+                    .addComponent(pPanelCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 145, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 529, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                    .addGap(606, 606, 606)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -285,6 +608,63 @@ public class Main extends javax.swing.JFrame {
             txtError.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
+
+    private void btnRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolActionPerformed
+        // TODO add your handling code here:
+        pCrearRol.setVisible(true);
+    }//GEN-LAST:event_btnRolActionPerformed
+
+    private void btnModificarCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCentroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarCentroActionPerformed
+
+    private void btnCrearCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCentroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearCentroActionPerformed
+
+    private void btnModificarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarRolActionPerformed
+
+    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+
+    private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
+        // TODO add your handling code here:
+        jPanel3.setVisible(false);
+        pPanelRol.setVisible(true);
+    }//GEN-LAST:event_btnRolesActionPerformed
+
+    private void btnCrearRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRolActionPerformed
+         Conexion cnn = null;
+        try {
+            cnn = new Conexion();
+        } catch (SQLException ex) {            
+            
+        }
+        String nombreRol = txtNombreRol.getText();
+        if(nombreRol.isEmpty()){
+            lblError.setText("* Recuerda Ingresa el nombre del Rol a crear");
+            lblError.setVisible(true);
+        }else{
+            lblError.setVisible(false);
+            Rol r1 = new Rol(nombreRol);
+            int res = cnn.insertRol(r1,"do");
+            if(res > 0){
+                lblSuccess.setText("Rol Ingresado Correctamente");
+                lblSuccess.setVisible(true);
+            }else{
+               lblSuccess.setVisible(false); 
+               lblError.setText("Error al insertar el rol");
+               lblError.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_btnCrearRolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,10 +702,27 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrearCentro;
+    private javax.swing.JButton btnCrearRol;
+    private javax.swing.JButton btnCrearUsuario;
+    private javax.swing.JButton btnDeshabilitarUsuario;
+    private javax.swing.JButton btnEliminarCentro;
+    private javax.swing.JButton btnEliminarRol;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnModificarCentro;
+    private javax.swing.JButton btnModificarRol;
+    private javax.swing.JButton btnModificarUsuario;
+    private javax.swing.JButton btnRol;
+    private javax.swing.JButton btnRoles;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -337,8 +734,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblSuccess;
+    private javax.swing.JPanel pCrearRol;
+    private javax.swing.JPanel pPanelCentros;
+    private javax.swing.JPanel pPanelRol;
+    private javax.swing.JPanel pPanelUsuario;
+    private javax.swing.JPanel pProgramas;
     private javax.swing.JLabel txtError;
+    private javax.swing.JTextField txtNombreRol;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
