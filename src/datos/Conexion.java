@@ -32,21 +32,21 @@ public class Conexion {
         cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "portafolio", "admin");
     }
     //ALUMNO
-    public int insertAlumno(Alumno alumno)
+    public int insertUpdatePersona(Persona persona, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTalumno (?,?,?,?,?,?,?,?,?,?)} ");
-            cst.setString(1, alumno.getRut());
-            cst.setString(2,alumno.getNombre_apellido());
-            cst.setDate(3, alumno.getFecha_nacimiento());
-            cst.setInt(4, alumno.getEdad());
-            cst.setInt(5, alumno.getTelefono_fijo());
-            cst.setInt(6, alumno.getTelefono_movil());
-            cst.setString(7, alumno.getEmail());
-            cst.setString(8, alumno.getVigencia());
-            cst.setInt(9, alumno.getId_comuna());
-            cst.setInt(10,alumno.getId_usuario());                     
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PERSONA (?,?,?,?,?,?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setString("P_RUT", persona.getRut());
+            cst.setString("P_NOMBRE", persona.getNombre());
+            cst.setString("P_APELLIDO_PATERNO",persona.getApellido_paterno());
+            cst.setString("P_APELLIDO_MATERNO",persona.getApellido_materno());
+            cst.setDate("P_FECHA_NACIMIENTO", persona.getFecha_nacimiento());
+            cst.setString("P_EMAIL", persona.getEmail());
+            cst.setInt("P_EDAD", persona.getEdad());
+            cst.setInt("P_TELEFONO_MOVIL", persona.getTelefono_movil());
+            cst.setInt("P_TELEFONO_FIJO", persona.getTelefono_fijo());
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -55,32 +55,7 @@ public class Conexion {
         return flag;
     }
      
-    public int updateAlumno(Alumno alumno)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEalumno (?,?,?,?,?,?,?,?,?,?)} ");
-            cst.setString(1, alumno.getRut());
-            cst.setString(2,alumno.getNombre_apellido());
-            cst.setDate(3, alumno.getFecha_nacimiento());
-            cst.setInt(4, alumno.getEdad());
-            cst.setInt(5, alumno.getTelefono_fijo());
-            cst.setInt(6, alumno.getTelefono_movil());
-            cst.setString(7, alumno.getEmail());
-            cst.setString(8, alumno.getVigencia());
-            cst.setInt(9, alumno.getId_comuna());
-            cst.setInt(10,alumno.getId_usuario());                     
-            flag= cst.executeUpdate();
-
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-
-    
-    
-    public boolean verificarUsuario(String usuario, String contrasena)
+    public boolean verificarUsuario(String usuario, String contrasena, String tipo)
     {
         try {
             CallableStatement cst = cn.prepareCall("{call VERIFICARLOGINAPP (?,?)} ");
@@ -97,30 +72,15 @@ public class Conexion {
     }
     
     //Asignatura
-    public int insertAsignatura(Asignatura asignatura)
+    public int insertUpdateAsignatura(Asignatura asignatura, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTasignatura (?,?,?)} ");
-            cst.setInt(1, asignatura.getId_asignatura());
-            cst.setString(2,asignatura.getAsignatura());
-            cst.setString(3, asignatura.getAlumno_rut());                        
-            flag= cst.executeUpdate();
-
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-     
-    public int updateAsignatura(Asignatura asignatura)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEasignatura (?,?,?)} ");
-            cst.setInt(1, asignatura.getId_asignatura());
-            cst.setString(2,asignatura.getAsignatura());
-            cst.setString(3, asignatura.getAlumno_rut());                
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ASIGNATURA (?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_ASIGNATURA", asignatura.getId_asignatura());
+            cst.setString("p_ASIGNATURA",asignatura.getAsignatura());
+            cst.setInt("p_CURSO_ID_CURSO", asignatura.getId_curso());                        
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -129,20 +89,18 @@ public class Conexion {
         return flag;
     }
     //Cel
-    public int insertCel(Cel cel)
+    public int insertUpdateCel(Cel cel, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTcel (?,?,?,?,?,?,?)} ");
-            cst.setInt(1, cel.getCel());
-            cst.setString(2,cel.getNombre_cel());
-            cst.setString(3, cel.getDireccion());        
-            cst.setInt(4, cel.getTelefono());            
-            cst.setString(5, cel.getEmail_contacto());        
-            cst.setInt(6, cel.getId_programa());        
-            cst.setInt(7, cel.getId_familia());        
-            
-            
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_CEL (?,?,?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_CEL", cel.getCel());
+            cst.setString("p_NOMBRE_CEL",cel.getNombre_cel());
+            cst.setString("p_DIRECCION", cel.getDireccion());        
+            cst.setInt("p_TELEFONO", cel.getTelefono());            
+            cst.setString("p_EMAIL_CONTACTO", cel.getEmail_contacto());        
+            cst.setInt("p_PAIS_ID_PAIS", cel.getPais());              
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -150,68 +108,19 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updateCel(Cel cel)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEcel (?,?,?,?,?,?,?)} ");
-            cst.setInt(1, cel.getCel());
-            cst.setString(2,cel.getNombre_cel());
-            cst.setString(3, cel.getDireccion());        
-            cst.setInt(4, cel.getTelefono());            
-            cst.setString(5, cel.getEmail_contacto());        
-            cst.setInt(6, cel.getId_programa());        
-            cst.setInt(7, cel.getId_familia());        
-            
-            flag= cst.executeUpdate();
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-    
-    //Comuna
-    public int insertComuna(Comuna comuna)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call INSERTcomuna (?,?)} ");
-            cst.setInt(1, comuna.getId_comuna());
-            cst.setString(2,comuna.getComuna());
 
-            flag= cst.executeUpdate();
-
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-     
-    public int updateComuna(Comuna comuna)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEcomuna (?,?)} ");
-            cst.setInt(1, comuna.getId_comuna());
-            cst.setString(2,comuna.getComuna());      
-            
-            flag= cst.executeUpdate();
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
     //Curso
-    public int insertCurso(Curso curso)
+    public int insertCurso(Curso curso, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTcurso (?,?,?,?)} ");
-            cst.setInt(1, curso.getId_curso());
-            cst.setString(2,curso.getNombre_curso());
-            cst.setInt(3, curso.getId_programa());
-            cst.setInt(4, curso.getSituacion_curso_id_estado());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_CURSO (?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_CURSO", curso.getId_curso());
+            cst.setString("p_NOMBRE_CURSO",curso.getNombre_curso());
+            cst.setInt("p_ESTADO_CURSO_ID_ESTADO", curso.getEstado_curso());
+            cst.setInt("p_PROGRAMA_ESTUDIO_ID_PROGRAMA", curso.getId_programa());
+
 
             flag= cst.executeUpdate();
 
@@ -220,32 +129,18 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updateCurso(Curso curso)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEcurso (?,?,?,?)} ");
-            cst.setInt(1, curso.getId_curso());
-            cst.setString(2,curso.getNombre_curso());
-            cst.setInt(3, curso.getId_programa());
-            cst.setInt(4, curso.getSituacion_curso_id_estado());    
-            
-            flag= cst.executeUpdate();
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
+
     //Documentos
-    public int insertDocumento(Documento documento)
+    public int insertUpdateDocumento(Documento documento, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTdocumento (?,?,?)} ");
-            cst.setInt(1, documento.getId_documentos());
-            cst.setString(2,documento.getDesc_familia());
-            cst.setInt(3, documento.getId_familia());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_DOCUMENTO (?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_DOCUMENTO", documento.getId_doc());
+            cst.setString("p_NOMBRE_DOCUMENTO",documento.getNombre_documento());
+            cst.setString("p_RUTA_DOCUMENTO", documento.getRuta_documento());
+            cst.setString("p_PERSONA_RUT", documento.getPersona_rut());
 
             flag= cst.executeUpdate();
 
@@ -254,15 +149,17 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updateDocumento(Documento documento)
+
+    //EstadoCurso
+    
+    public int insertUpdateEstadoCurso(EstadoCurso estadoCurso, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEdocumento (?,?,?)} ");
-            cst.setInt(1, documento.getId_documentos());
-            cst.setString(2,documento.getDesc_familia());
-            cst.setInt(3, documento.getId_familia()); 
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ESTADO_CURSO (?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_ESTADO", estadoCurso.getId_estado());
+            cst.setString("p_NOMBRE_ESTADO",estadoCurso.getNombre_estado());
             flag= cst.executeUpdate();
             
         } catch (Exception ex) {
@@ -270,20 +167,17 @@ public class Conexion {
         }
         return flag;
     }
+
     
     //Familia 
-        public int insertFamilia(Familia familia)
+    public int insertUpdateFamilia(Familia familia, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTfamilia (?,?,?,?,?,?,?)} ");
-            cst.setInt(1, familia.getId_familia());
-            cst.setInt(2, familia.getId_usuario());
-            cst.setString(3,familia.getNombre_familia());
-            cst.setString(4,familia.getDireccion_familia());
-            cst.setString(5,familia.getEmail_familia());
-            cst.setInt(6, familia.getTelefono_fijo());
-            cst.setInt(7, familia.getTelefono_movil());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_FAMILIA (?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setString("p_RUT", familia.getRut());
+            cst.setString("p_direccion", familia.getDireccion());
 
             flag= cst.executeUpdate();
 
@@ -293,34 +187,16 @@ public class Conexion {
         return flag;
     }
      
-    public int updateFamilia(Familia familia)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEfamilia (?,?,?,?,?,?,?)} ");
-            cst.setInt(1, familia.getId_familia());
-            cst.setInt(2, familia.getId_usuario());
-            cst.setString(3,familia.getNombre_familia());
-            cst.setString(4,familia.getDireccion_familia());
-            cst.setString(5,familia.getEmail_familia());
-            cst.setInt(6, familia.getTelefono_fijo());
-            cst.setInt(7, familia.getTelefono_movil()); 
-            flag= cst.executeUpdate();
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
     //NotasCurso
-    public int insertNotasCurso(NotasCurso notasCurso)
+    public int insertUpdateNotasCurso(Nota nota, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTnotas_curso (?,?,?)} ");
-            cst.setInt(1, notasCurso.getId_nota());
-            cst.setInt(2, notasCurso.getNota());
-            cst.setInt(3, notasCurso.getId_curso());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_NOTA (?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_NOTA", nota.getId_nota());
+            cst.setInt("p_NOTA", nota.getNota());
+            cst.setInt("p_ASIGNATURA_ID_ASIGNATURA", nota.getId_asig());
 
 
             flag= cst.executeUpdate();
@@ -330,32 +206,17 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updateNotasCurso(NotasCurso notasCurso)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEnotas_curso (?,?,?)} ");
-            cst.setInt(1, notasCurso.getId_nota());
-            cst.setInt(2, notasCurso.getNota());
-            cst.setInt(3, notasCurso.getId_curso());
-            
-            flag= cst.executeUpdate();
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-    
+
     
     //Pais
-    public int insertPais(Pais pais)
+    public int insertUpdatePais(Pais pais, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTpais (?,?)} ");
-            cst.setInt(1, pais.getId_pais());
-            cst.setString(2, pais.getPais());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PAIS (?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_PAIS", pais.getId_pais());
+            cst.setString("p_NOMBRE", pais.getPais());
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -363,33 +224,18 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updatePais(Pais pais)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEpais (?,?)} ");
-            cst.setInt(1, pais.getId_pais());
-            cst.setString(2, pais.getPais());
-            flag= cst.executeUpdate();
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-    
+
     //Postulacion
-    public int insertPostulacion(Postulacion postulacion)
+    public int insertUpdatePostulacion(Postulacion postulacion, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTpostulacion (?,?,?,?)} ");
-            
-            cst.setInt(1, postulacion.getId_postulacion());
-            cst.setDate(2, postulacion.getMarca_temporal());
-            cst.setString(3, postulacion.getAlumno_rut());
-            cst.setInt(4, postulacion.getId_programa());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_POSTULACION (?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_POSTULACION", postulacion.getId_postulacion());
+            cst.setDate("p_FECHA_POSTULACION", postulacion.getFecha_postulacion());
+            cst.setString("p_PERSONA_RUT", postulacion.getPersona_rut());
+            cst.setInt("p_PROGRAMA_ESTUDIO_ID_PROGRAMA", postulacion.getId_programa());
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -397,37 +243,19 @@ public class Conexion {
         }
         return flag;
     }
-     
-    public int updatePostulacion(Postulacion postulacion)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEpostulacion (?,?,?,?)} ");
-            cst.setInt(1, postulacion.getId_postulacion());
-            cst.setDate(2, postulacion.getMarca_temporal());
-            cst.setString(3, postulacion.getAlumno_rut());
-            cst.setInt(4, postulacion.getId_programa());
-            flag= cst.executeUpdate();
-            
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-    
+
     // Programas
-    public int insertPrograma(Programa programa)
+    public int insertUpdatePrograma(Programa programa, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call INSERTprograma (?,?,?,?,?)} ");
-            
-            cst.setInt(1, programa.getId_programa());
-            cst.setString(2, programa.getNombre_programa());
-            cst.setInt(3, programa.getDuracion_programa());
-            cst.setInt(4, programa.getId_pais());
-            cst.setString(5, programa.getAlumno_rut());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PROGRAMA_ESTUDIO (?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_PROGRAMA", programa.getId_programa());
+            cst.setString("p_NOMBRE_PROGRAMA", programa.getNombre_programa());
+            cst.setInt("p_DURACION_PROGRAMA", programa.getDuracion_programa());
+            cst.setInt("p_CEL_ID_CEL", programa.getId_cel());
+
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -436,101 +264,47 @@ public class Conexion {
         return flag;
     }
      
-    public int updatePrograma(Programa programa)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEprograma (?,?,?,?,?)} ");
-            cst.setInt(1, programa.getId_programa());
-            cst.setString(2, programa.getNombre_programa());
-            cst.setInt(3, programa.getDuracion_programa());
-            cst.setInt(4, programa.getId_pais());
-            cst.setString(5, programa.getAlumno_rut());
-            flag= cst.executeUpdate();
-            
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-    
     //Rol
-        public int insertRol(Rol rol, String tipo)
+        public int insertUpdateRol(Rol rol, String tipo)
     {
         int flag = 0;
-//        boolean res ;
-//        ResultSet resultado = null;
         try {
             CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?,?)} ");
-//            cst.registerOutParameter("R_ID",Types.INTEGER);
-//            cst.registerOutParameter("R_CODIGO",Types.INTEGER);
-//            cst.registerOutParameter("R_MENSAJE",Types.VARCHAR);
             cst.setString("TIPO",tipo);
             cst.setInt("p_ID_ROL",rol.getId_rol());
             cst.setString("p_NOMBRE_ROL",rol.getNombre_rol());            
             flag = cst.executeUpdate();
-//            resultado = cst.getResultSet();
 
         } catch (Exception ex) {
             return 0;
         }
         return flag;
     }
-     
-    public int updateRol(Rol rol)
+
+    
+    //Usuario
+    public int insertUpdateUsuario(Usuario usuario, String tipo)
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call UPDATErol (?,?)} ");
-            cst.setInt(1, rol.getId_rol());
-            cst.setString(2, rol.getNombre_rol());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_USUARIO (?,?,?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_USUARIO", usuario.getId_usuario());
+            cst.setString("p_USUARIO", usuario.getUsuario());
+            cst.setString("p_PASSWORD", usuario.getContrasena());
+            cst.setString("p_PERSONA_RUT", usuario.getPersona_rut());
+            cst.setInt("p_ROL_ID_ROL", usuario.getId_rol());
+            cst.setInt("p_VIGENCIA", usuario.getVigencia());
+            
+            
             flag= cst.executeUpdate();
-            
-            
+
         } catch (Exception ex) {
             return 0;
         }
         return flag;
     }
     
-    //Usuario
-    public int insertUsuario(Usuario usuario)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call INSERTusuario (?,?,?,?)} ");
-            
-            cst.setInt(1, usuario.getId_usuario());
-            cst.setString(2, usuario.getUsuario());
-            cst.setString(3, usuario.getContrasena());
-            cst.setInt(4, usuario.getId_rol());
-            
-            flag= cst.executeUpdate();
-
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
-     
-    public int updateUsuario(Usuario usuario)
-    {
-        int flag = 0;
-        try {
-            CallableStatement cst = cn.prepareCall("{call UPDATEusuario (?,?)} ");
-            cst.setInt(1, usuario.getId_usuario());
-            cst.setString(2, usuario.getUsuario());
-            cst.setString(3, usuario.getContrasena());
-            cst.setInt(4, usuario.getId_rol());
-            
-            flag= cst.executeUpdate();         
-            
-        } catch (Exception ex) {
-            return 0;
-        }
-        return flag;
-    }
     
 }
    
