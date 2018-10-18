@@ -15,20 +15,27 @@ public class Cel {
     private String direccion;
     private int telefono;
     private String email_contacto;
-    private int id_programa;
-    private int id_familia;
+    private int pais;
 
-    public Cel(int cel, String nombre_cel, String direccion, int telefono, String email_contacto, int id_programa, int id_familia) {
+    public Cel(int cel, String nombre_cel, String direccion, int telefono, String email_contacto, int pais) {
         this.cel = cel;
         this.nombre_cel = nombre_cel;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email_contacto = email_contacto;
-        this.id_programa = id_programa;
-        this.id_familia = id_familia;
+        this.pais = pais;
     }
+
     
     
+    
+    public int getPais() {
+        return pais;
+    }
+
+    public void setPais(int pais) {
+        this.pais = pais;
+    }
     
     public int getCel() {
         return cel;
@@ -70,13 +77,6 @@ public class Cel {
         this.email_contacto = email_contacto;
     }
 
-    public int getId_programa() {
-        return id_programa;
-    }
-
-    public int getId_familia() {
-        return id_familia;
-    }
 
     
     

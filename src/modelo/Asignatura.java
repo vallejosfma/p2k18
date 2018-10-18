@@ -12,12 +12,12 @@ package modelo;
 public class Asignatura {
     private int id_asignatura;
     private String asignatura;
-    private String alumno_rut;
+    private int id_curso;
 
-    public Asignatura(int id_asignatura, String asignatura, String alumno_rut) {
+    public Asignatura(int id_asignatura, String asignatura, int alumno_rut) {
         this.id_asignatura = id_asignatura;
         this.asignatura = asignatura;
-        this.alumno_rut = alumno_rut;
+        this.id_curso = alumno_rut;
     }
     
     
@@ -37,12 +37,12 @@ public class Asignatura {
         this.asignatura = asignatura;
     }
 
-    public String getAlumno_rut() {
-        return alumno_rut;
+    public int getId_curso() {
+        return id_curso;
     }
 
-    public void setAlumno_rut(String alumno_rut) {
-        this.alumno_rut = alumno_rut;
+    public void setId_curso(int id_curso) {
+        this.id_curso = id_curso;
     }
     
     

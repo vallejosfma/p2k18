@@ -9,15 +9,15 @@ package modelo;
  *
  * @author Seba PC
  */
-public class NotasCurso {
+public class Nota {
     private int id_nota;
     private int nota;
-    private int id_curso;
+    private int id_asig;
 
-    public NotasCurso(int id_nota, int nota, int id_curso) {
+    public Nota(int id_nota, int nota, int id_curso) {
         this.id_nota = id_nota;
         this.nota = nota;
-        this.id_curso = id_curso;
+        this.id_asig = id_curso;
     }
 
     public int getId_nota() {
@@ -36,12 +36,12 @@ public class NotasCurso {
         this.nota = nota;
     }
 
-    public int getId_curso() {
-        return id_curso;
+    public int getId_asig() {
+        return id_asig;
     }
 
-    public void setId_curso(int id_curso) {
-        this.id_curso = id_curso;
+    public void setId_asig(int id_asig) {
+        this.id_asig = id_asig;
     }
     
     

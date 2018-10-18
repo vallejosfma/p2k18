@@ -12,9 +12,18 @@ package modelo;
 public class Usuario {
     private int id_usuario;
     private String usuario;
-    private String contrasena;
+    private String password;
+    private String persona_rut;
     private int id_rol;
     private int vigencia;
+    public String getPersona_rut() {
+        return persona_rut;
+    }
+
+    public void setPersona_rut(String persona_rut) {
+        this.persona_rut = persona_rut;
+    }
+
 
     public int getVigencia() {
         return vigencia;
@@ -24,10 +33,10 @@ public class Usuario {
         this.vigencia = vigencia;
     }
 
-    public Usuario(int id_usuario, String usuario, String cotnrasena, int id_rol) {
+    public Usuario(int id_usuario, String usuario, String password, int id_rol) {
         this.id_usuario = id_usuario;
         this.usuario = usuario;
-        this.contrasena = contrasena;
+        this.password = password;
         this.id_rol = id_rol;
     }
 
@@ -48,11 +57,11 @@ public class Usuario {
     }
 
     public String getContrasena() {
-        return contrasena;
+        return password;
     }
 
     public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+        this.password = contrasena;
     }
 
     public int getId_rol() {

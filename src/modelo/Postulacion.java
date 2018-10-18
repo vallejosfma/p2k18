@@ -13,14 +13,14 @@ import java.sql.Date;
  */
 public class Postulacion {
     private int id_postulacion;
-    private Date marca_temporal;
-    private String alumno_rut;
+    private Date fecha_postulacion;
+    private String persona_rut;
     private int id_programa;
 
     public Postulacion(int id_postulacion, Date marca_temporal, String alumno_rut, int id_programa) {
         this.id_postulacion = id_postulacion;
-        this.marca_temporal = marca_temporal;
-        this.alumno_rut = alumno_rut;
+        this.fecha_postulacion = marca_temporal;
+        this.persona_rut = alumno_rut;
         this.id_programa = id_programa;
     }
 
@@ -32,20 +32,20 @@ public class Postulacion {
         this.id_postulacion = id_postulacion;
     }
 
-    public Date getMarca_temporal() {
-        return marca_temporal;
+    public Date getFecha_postulacion() {
+        return fecha_postulacion;
     }
 
-    public void setMarca_temporal(Date marca_temporal) {
-        this.marca_temporal = marca_temporal;
+    public void setFecha_postulacion(Date fecha_postulacion) {
+        this.fecha_postulacion = fecha_postulacion;
     }
 
-    public String getAlumno_rut() {
-        return alumno_rut;
+    public String getPersona_rut() {
+        return persona_rut;
     }
 
-    public void setAlumno_rut(String alumno_rut) {
-        this.alumno_rut = alumno_rut;
+    public void setPersona_rut(String persona_rut) {
+        this.persona_rut = persona_rut;
     }
 
     public int getId_programa() {

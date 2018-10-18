@@ -13,13 +13,13 @@ public class Curso {
     private int id_curso;
     private String nombre_curso;
     private int id_programa;
-    private int situacion_curso_id_estado;
+    private int estado_curso;
 
-    public Curso(int id_curso, String nombre_curso, int id_programa, int situacion_curso_id_estado) {
+    public Curso(int id_curso, String nombre_curso, int id_programa, int estado_curso) {
         this.id_curso = id_curso;
         this.nombre_curso = nombre_curso;
         this.id_programa = id_programa;
-        this.situacion_curso_id_estado = situacion_curso_id_estado;
+        this.estado_curso = estado_curso;
     }
 
     public int getId_curso() {
@@ -46,12 +46,12 @@ public class Curso {
         this.id_programa = id_programa;
     }
 
-    public int getSituacion_curso_id_estado() {
-        return situacion_curso_id_estado;
+    public int getEstado_curso() {
+        return estado_curso;
     }
 
-    public void setSituacion_curso_id_estado(int situacion_curso_id_estado) {
-        this.situacion_curso_id_estado = situacion_curso_id_estado;
+    public void setEstado_curso(int estado_curso) {
+        this.estado_curso = estado_curso;
     }
     
     

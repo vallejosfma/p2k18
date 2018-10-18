@@ -13,17 +13,16 @@ public class Programa {
     private int id_programa;
     private String nombre_programa;
     private int duracion_programa;
-    private int id_pais;
-    private String alumno_rut;
+    private int id_cel;
 
-    public Programa(int id_programa, String nombre_programa, int duracion_programa, int id_pais, String alumno_rut) {
+    public Programa(int id_programa, String nombre_programa, int duracion_programa, int id_cel) {
         this.id_programa = id_programa;
         this.nombre_programa = nombre_programa;
         this.duracion_programa = duracion_programa;
-        this.id_pais = id_pais;
-        this.alumno_rut = alumno_rut;
+        this.id_cel = id_cel;
     }
 
+    
     public int getId_programa() {
         return id_programa;
     }
@@ -48,21 +47,14 @@ public class Programa {
         this.duracion_programa = duracion_programa;
     }
 
-    public int getId_pais() {
-        return id_pais;
+    public int getId_cel() {
+        return id_cel;
     }
 
-    public void setId_pais(int id_pais) {
-        this.id_pais = id_pais;
+    public void setId_cel(int id_cel) {
+        this.id_cel = id_cel;
     }
 
-    public String getAlumno_rut() {
-        return alumno_rut;
-    }
-
-    public void setAlumno_rut(String alumno_rut) {
-        this.alumno_rut = alumno_rut;
-    }
     
-    
+
 }
