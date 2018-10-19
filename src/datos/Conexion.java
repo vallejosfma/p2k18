@@ -8,6 +8,8 @@ package datos;
 import java.io.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.driver.*;
@@ -24,7 +26,7 @@ public class Conexion {
     BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
     int id = -1;
     Connection cn = null;
-
+    cargarDatos c = new cargarDatos();
 
 
     public Conexion() throws SQLException{
@@ -32,6 +34,59 @@ public class Conexion {
         cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "portafolio", "admin");
     }
     //ALUMNO
+    public void MostrarAlumnos(DefaultTableModel model,JTable tabla){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,TO_CHAR(FECHA_NACIMIENTO, 'DD/MM/YYYY'),(CASE WHEN EXISTS (SELECT * FROM DOCUMENTO T2 WHERE PERSONA_RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO FROM PERSONA T1 ORDER BY RUT");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(6, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+       
+    }
+     public void BuscarAlumnos(DefaultTableModel model,JTable tabla,String dato){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,FECHA_NACIMIENTO FROM PERSONA WHERE (NOMBRE LIKE '%"+dato+"%' OR APELLIDO_PATERNO LIKE '%"+dato+"%') ORDER BY RUT");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(5, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+       
+    }
+     public Object[] consultarRut(String rut){
+        Object[] datos = new Object[11];
+        try {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,FECHA_NACIMIENTO,EMAIL,EDAD,TELEFONO_MOVIL,TELEFONO_FIJO,(CASE WHEN EXISTS (SELECT * FROM DOCUMENTO T2 WHERE PERSONA_RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO,NVL((CASE\n" +
+" WHEN NOT EXISTS (SELECT * FROM DOCUMENTO T4 WHERE PERSONA_RUT = T1.RUT) THEN\n" +
+" (SELECT NACIONALIDAD FROM ALUMNO T3 WHERE T3.RUT = T1.RUT)\n" +
+" ELSE\n" +
+" (SELECT DIRECCION FROM FAMILIA T5 WHERE T5.RUT = T1.RUT)\n" +
+" END),'SIN DATOS') AS DATO FROM PERSONA T1 WHERE RUT = ?");
+            sentencia.setString(1,rut);
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                datos[0] = rs.getInt(1);//rut
+                datos[1] = rs.getString(2);//nombre
+                datos[2] = rs.getString(3);//apellido1
+                datos[3] = rs.getString(4);//apellido 2
+                datos[4] = rs.getDate(5);//fecha
+                datos[5] = rs.getString(6);//email
+                datos[6] = rs.getInt(7);//edad
+                datos[7] = rs.getInt(8);//telefono 1
+                datos[8] = rs.getInt(9);//telefono 2
+                datos[9] = rs.getString(10);//tipo
+                datos[10] = rs.getString(11);//DATO
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar"+e);
+        }
+        return datos;
+    }
     public int insertUpdatePersona(Persona persona, String tipo)
     {
         int flag = 0;
@@ -55,7 +110,7 @@ public class Conexion {
         return flag;
     }
      
-    public boolean verificarUsuario(String usuario, String contrasena, String tipo)
+    public boolean verificarUsuario(String usuario, String contrasena)
     {
         try {
             CallableStatement cst = cn.prepareCall("{call VERIFICARLOGINAPP (?,?)} ");
