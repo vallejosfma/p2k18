@@ -7,7 +7,9 @@ package datos;
 
 import java.io.*;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
@@ -87,6 +89,20 @@ public class Conexion {
         }
         return datos;
     }
+     public int verificarRut(String rut){
+       int value = 0;
+        try {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT COUNT(*) FROM USUARIO WHERE PERSONA_RUT =?");
+            sentencia.setString(1,rut);
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                value = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar"+e);
+        }
+        return value;
+    }
     public int insertUpdatePersona(Persona persona, String tipo)
     {
         int flag = 0;
@@ -102,6 +118,28 @@ public class Conexion {
             cst.setInt("P_EDAD", persona.getEdad());
             cst.setInt("P_TELEFONO_MOVIL", persona.getTelefono_movil());
             cst.setInt("P_TELEFONO_FIJO", persona.getTelefono_fijo());
+            flag= cst.executeUpdate();
+
+        } catch (Exception ex) {
+            return 0;
+        }
+        return flag;
+    }
+    
+    public int insertAlumno(Alumno a){
+        int flag = 0;
+        double nota = 0;
+        Random r = new Random();
+        double rangeMin = 4.0;
+        double rangeMax = 7.0;
+        double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+         nota = (double)Math.round(randomValue*10)/10;                
+        try {
+            CallableStatement cst = cn.prepareCall("{call SP_DO_ALUMNO (?,?,?)} ");
+            cst.setString("P_RUT", a.getRut());
+            cst.setString("P_NACIONALIDAD", a.getNacionalidad());
+            cst.setDouble("P_NOTA",nota);
+                                  
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {

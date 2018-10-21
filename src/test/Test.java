@@ -7,7 +7,9 @@ package test;
 
 import java.io.*;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.driver.*;
 
@@ -20,7 +22,16 @@ public class Test {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         int id = -1;
         Connection cn = null;
-
+        Random r = new Random();
+        double rangeMin = 4.0;
+        double rangeMax = 7.0;
+        double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+         System.out.println((double)Math.round(randomValue*10)/10);
+//        DecimalFormat df = new DecimalFormat("###.#");
+//        String nota = df.format(Math.random()*6 + 1);
+////        nota = nota.replaceAll(".",",");
+//        System.out.println(nota);
+         
         try {
             // Carga el driver de oracle
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());

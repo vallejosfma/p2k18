@@ -6,6 +6,9 @@
 package app;
 
 import datos.Conexion;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Date;
 import java.util.*;
@@ -14,10 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Alumno;
 import modelo.Persona;
 import modelo.Rol;
 
@@ -265,7 +270,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLogin))))
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(426, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +287,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(txtError)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addContainerGap(360, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(51, 204, 255));
@@ -876,6 +881,11 @@ public class Main extends javax.swing.JFrame {
         jPanel7.add(btnEliminarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 110, 30));
 
         btnModificarPersona.setText("Modificar");
+        btnModificarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarPersonaActionPerformed(evt);
+            }
+        });
         jPanel7.add(btnModificarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 470, 120, 40));
 
         TabPersona.addTab("Crear Persona", jPanel7);
@@ -890,7 +900,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1072,10 +1082,6 @@ public class Main extends javax.swing.JFrame {
         txtNacionalidad.setEnabled(false);
     }//GEN-LAST:event_rbtnFamiliaActionPerformed
 
-    private void btnArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnArchivosActionPerformed
-
     private void txtBuscarPersonaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarPersonaCaretUpdate
          // TODO add your handling code here:
          buscarPersona();
@@ -1115,14 +1121,56 @@ public class Main extends javax.swing.JFrame {
                  rbtnFamilia.setSelected(true);
              }
              TabPersona.setSelectedIndex(1);
-             btnModificarPersona.setEnabled(false);
-             btnEliminarPersona.setEnabled(false);
+             btnModificarPersona.setEnabled(true);
+             btnEliminarPersona.setEnabled(true);
          }
     }//GEN-LAST:event_tblPersonasMouseClicked
 
     private void txtNuevaPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaPersonaActionPerformed
         // TODO add your handling code here:
+         if(rbtnAlumno.isSelected() || rbtnFamilia.isSelected()){
            String rut =  txtRut.getText();
+            if(cnn.verificarRut(rut)== 0){
+                String nombre = txtNombre.getText();
+              String apellido_p = txtApellidoPaterno.getText();
+              String apellido_m = txtApellidoMaterno.getText();
+              java.util.Date fecha_nacimiento = dFechaNacimiento.getDate();
+              java.sql.Date fecha_final = new java.sql.Date(fecha_nacimiento.getTime());
+              String email = txtEmail.getText();
+              int edad = Integer.parseInt(txtEdad.getText());
+              int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
+              int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
+              Persona p = new Persona(rut,nombre,apellido_p,apellido_m,fecha_final,email,edad,telefono_m,telefono_f);
+              
+              int res = cnn.insertUpdatePersona(p, "do");
+               if(res>0){
+                 limpiarCampos();
+                 actualizarTabla();
+                 if(rbtnAlumno.isSelected()){
+                  String nacionalidad = txtNacionalidad.getText();
+                  Alumno a = new Alumno(rut,nacionalidad);
+                  int resp = cnn.insertAlumno(a);
+                  }else{
+                     
+                 }
+                 JOptionPane.showMessageDialog(null, "Se ha creado la persona correctamente");
+                 }else{
+                     JOptionPane.showMessageDialog(null, "Hubo un error al crear la persona");
+                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "El rut ingresado ya posee un usuario");
+            }
+                  
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a crear");
+        }
+             
+    }//GEN-LAST:event_txtNuevaPersonaActionPerformed
+
+    private void btnModificarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPersonaActionPerformed
+        // TODO add your handling code here:
+        if(rbtnAlumno.isSelected() || rbtnFamilia.isSelected()){
+            String rut =  txtRut.getText();
              String nombre = txtNombre.getText();
              String apellido_p = txtApellidoPaterno.getText();
              String apellido_m = txtApellidoMaterno.getText();
@@ -1133,21 +1181,38 @@ public class Main extends javax.swing.JFrame {
              int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
              int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
              Persona p = new Persona(rut,nombre,apellido_p,apellido_m,fecha_final,email,edad,telefono_m,telefono_f);
-             if(rbtnAlumno.isSelected() || rbtnFamilia.isSelected()){
-                 int res = cnn.insertUpdatePersona(p, "do");
-                if(res>0){
-                    limpiarCampos();
-                    actualizarTabla();
-                    JOptionPane.showMessageDialog(null, "Se a agregado la persona correctamente");
-
+             int res = cnn.insertUpdatePersona(p, "set");
+             if(res>0){
+                limpiarCampos();
+                actualizarTabla();
+                JOptionPane.showMessageDialog(null, "Se ha modificado la persona correctamente");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Hubo un error al agregar la persona");
+                    JOptionPane.showMessageDialog(null, "Hubo un error al modificar la persona");
                 }
              }else{
-                 JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a crear");
+                 JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a modificar");
              }
-             
-    }//GEN-LAST:event_txtNuevaPersonaActionPerformed
+    }//GEN-LAST:event_btnModificarPersonaActionPerformed
+
+    private void btnArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivosActionPerformed
+         // TODO add your handling code here:
+         JFileChooser fileChooser = new JFileChooser();
+         int returnVal = fileChooser.showOpenDialog(null);        
+         fileChooser.setMultiSelectionEnabled(true);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                rsdragdropfiles.RSDragDropFiles.setCopiar(fileChooser.getSelectedFile().toString(), "src/documentos/imagen.png");
+                 FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                DataInputStream dis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    
+                } catch (Exception e) {
+                }
+            }
+            
+    }//GEN-LAST:event_btnArchivosActionPerformed
 
     /**
      * @param args the command line arguments
