@@ -10,12 +10,24 @@ package modelo;
  * @author Seba PC
  */
 public class Usuario {
+
+
     private int id_usuario;
     private String usuario;
     private String password;
     private String persona_rut;
     private int id_rol;
     private int vigencia;
+    
+    public Usuario(int id_usuario, String usuario, String password, String persona_rut, int id_rol, int vigencia) {
+        this.id_usuario = id_usuario;
+        this.usuario = usuario;
+        this.password = password;
+        this.persona_rut = persona_rut;
+        this.id_rol = id_rol;
+        this.vigencia = vigencia;
+    }
+
     public String getPersona_rut() {
         return persona_rut;
     }
@@ -33,12 +45,6 @@ public class Usuario {
         this.vigencia = vigencia;
     }
 
-    public Usuario(int id_usuario, String usuario, String password, int id_rol) {
-        this.id_usuario = id_usuario;
-        this.usuario = usuario;
-        this.password = password;
-        this.id_rol = id_rol;
-    }
 
     public int getId_usuario() {
         return id_usuario;

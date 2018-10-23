@@ -48,6 +48,43 @@ public class Conexion {
         }
        
     }
+    
+    //MOSTRAR USUARIO
+    public void MostrarUsuario(DefaultTableModel model,JTable tabla){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_USUARIO,USUARIO,PERSONA_RUT,ROL_ID_ROL,VIGENCIA FROM  USUARIO ORDER BY ID_USUARIO");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(5, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    //Buscar Usuario
+    }
+    public Usuario selectUsuario(int id_usuario) throws SQLException
+    {
+        Usuario datosUsuario = null;
+        
+        try {
+            CallableStatement cst = cn.prepareCall("{call TRAERUSUARIO (?,?,?,?,?,?)} ");
+            cst.setInt(1, id_usuario);
+            cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(4, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(5, java.sql.Types.INTEGER);
+            cst.registerOutParameter(6, java.sql.Types.INTEGER);
+            cst.execute();
+            datosUsuario = new Usuario(id_usuario,cst.getString(2), cst.getString(3), cst.getString(4),cst.getInt(5), cst.getInt(6));
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al buscar usuario id: "+ id_usuario);
+        }
+        return datosUsuario;
+    }
+    
+    
      public void BuscarAlumnos(DefaultTableModel model,JTable tabla,String dato){
         
         try{
