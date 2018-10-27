@@ -64,6 +64,12 @@ public class Main extends javax.swing.JFrame {
         }
         btnModificarPersona.setEnabled(false);
         btnEliminarPersona.setEnabled(false);
+        jPanel3.setVisible(false);
+        pPanelUsuario3.setVisible(false);
+        pPanelRol.setVisible(false);
+        pPanelCentros.setVisible(false);
+        pPanelPersona.setVisible(false);
+        pPanelUsuario.setVisible(false);
 
     }
 
@@ -242,7 +248,7 @@ public class Main extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
-        pPanelLogin.setBackground(new java.awt.Color(51, 204, 255));
+        pPanelLogin.setBackground(new java.awt.Color(255, 255, 255));
         pPanelLogin.setMinimumSize(new java.awt.Dimension(800, 600));
         pPanelLogin.setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -303,7 +309,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(203, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(51, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setMinimumSize(new java.awt.Dimension(800, 600));
         jPanel3.setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -400,7 +406,7 @@ public class Main extends javax.swing.JFrame {
         pProgramas.setLayout(pProgramasLayout);
         pProgramasLayout.setHorizontalGroup(
             pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
         pProgramasLayout.setVerticalGroup(
             pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,7 +427,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(6, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1024,7 +1030,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 505, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                     .addGap(606, 606, 606)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()

@@ -34,6 +34,7 @@ public class Conexion {
     public Conexion() throws SQLException{
         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "portafolio", "admin");
+//        cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:portafolio", "portafolio", "admin");
     }
     //ALUMNO
     public void MostrarAlumnos(DefaultTableModel model,JTable tabla){
@@ -161,6 +162,7 @@ public class Conexion {
             return 0;
         }
         return flag;
+        
     }
     
     public int insertAlumno(Alumno a){
@@ -399,9 +401,8 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?,?)} ");
-            cst.setString("TIPO",tipo);
-            cst.setInt("p_ID_ROL",rol.getId_rol());
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?)} ");
+            cst.setString("TIPO",tipo);            
             cst.setString("p_NOMBRE_ROL",rol.getNombre_rol());            
             flag = cst.executeUpdate();
 
