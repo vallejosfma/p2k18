@@ -45,11 +45,8 @@ public class Main extends javax.swing.JFrame {
      */
     Conexion cnn = null;
     FileInputStream fis;
-    DefaultTableModel dtm = new DefaultTableModel() {
-        public boolean isCellEditable(int fila, int columna) {
-            return false;
-        }
-    };
+    DefaultTableModel dtm ; 
+    DefaultTableModel dtmUsuario ;
 
     public Main() {
         initComponents();
@@ -72,7 +69,14 @@ public class Main extends javax.swing.JFrame {
         pPanelUsuario.setVisible(false);
 
     }
-
+    public void volverMenu(){        
+        pPanelUsuario3.setVisible(false);
+        pPanelRol.setVisible(false);
+        pPanelCentros.setVisible(false);
+        pPanelPersona.setVisible(false);
+        pPanelUsuario.setVisible(false);
+        jPanel3.setVisible(true);
+    }
     private void setVisibleOff() {
         pPanelUsuario3.setVisible(false);
         pPanelRol.setVisible(false);
@@ -87,6 +91,12 @@ public class Main extends javax.swing.JFrame {
             dtm.removeRow(0);
         }
         cnn.MostrarAlumnos(dtm, tblPersonas);
+    }
+    public void actualizarTablaUsuario() {
+        while (dtmUsuario.getRowCount() > 0) {
+            dtmUsuario.removeRow(0);
+        }
+        cnn.MostrarUsuario(dtmUsuario, tblUsuario);
     }
 
     public void buscarPersona() {
@@ -185,6 +195,7 @@ public class Main extends javax.swing.JFrame {
         tblPersonas = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         txtBuscarPersona = new javax.swing.JTextField();
+        btnVolverMenuPersona = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         rbtnAlumno = new javax.swing.JRadioButton();
         rbtnFamilia = new javax.swing.JRadioButton();
@@ -289,7 +300,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         pPanelLoginLayout.setVerticalGroup(
             pPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +317,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(pPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -815,6 +826,14 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel8.add(txtBuscarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 540, -1));
 
+        btnVolverMenuPersona.setText("Volver");
+        btnVolverMenuPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverMenuPersonaActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnVolverMenuPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
         TabPersona.addTab("Modificar Persona", jPanel8);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -1166,7 +1185,11 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel3.setVisible(false);
         pPanelPersona.setVisible(true);
-
+        dtm = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+        };
         tblPersonas.setModel(dtm);
         dtm.addColumn("Rut");
         dtm.addColumn("Nombre");
@@ -1320,15 +1343,19 @@ public class Main extends javax.swing.JFrame {
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         jPanel3.setVisible(false);
         pPanelUsuario.setVisible(true);
-        lblErrorVigencia.setVisible(false);
-
-        tblUsuario.setModel(dtm);
-        dtm.addColumn("ID Usuario");
-        dtm.addColumn("Usuario");
-        dtm.addColumn("RUT Persona");
-        dtm.addColumn("ID Rol");
-        dtm.addColumn("Vigencia");
-        cnn.MostrarUsuario(dtm, tblUsuario);
+        lblErrorVigencia.setVisible(false);       
+        dtmUsuario = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+        tblUsuario.setModel(dtmUsuario);
+        dtmUsuario.addColumn("ID Usuario");
+        dtmUsuario.addColumn("Usuario");
+        dtmUsuario.addColumn("RUT Persona");
+        dtmUsuario.addColumn("ID Rol");
+        dtmUsuario.addColumn("Vigencia");
+        cnn.MostrarUsuario(dtmUsuario, tblUsuario);
         tblUsuario.getTableHeader().setReorderingAllowed(false);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
@@ -1345,8 +1372,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarPersonaActionPerformed
 
     private void btnVolverUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverUsuarioActionPerformed
-        pPanelPersona.setVisible(false);
-        jPanel3.setVisible(true);
+        volverMenu();
 
     }//GEN-LAST:event_btnVolverUsuarioActionPerformed
 
@@ -1373,7 +1399,13 @@ public class Main extends javax.swing.JFrame {
         if (user != null) {
             lblErrorVigencia.setVisible(false);
             user.setVigencia(cuentaActiva);
-            cnn.insertUpdateUsuario(user, "set");
+            int res =cnn.insertUpdateUsuario(user, "set");
+            if(res>0){
+                actualizarTablaUsuario();
+                JOptionPane.showMessageDialog(null, "Se ha actualizado la vigencia correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la vigencia");
+            }
         }
         else
         {
@@ -1383,6 +1415,11 @@ public class Main extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_btnCambiarVigenciaActionPerformed
+
+    private void btnVolverMenuPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverMenuPersonaActionPerformed
+        // TODO add your handling code here:
+        volverMenu();
+    }//GEN-LAST:event_btnVolverMenuPersonaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1444,6 +1481,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton btnVolver1;
     private javax.swing.JButton btnVolver2;
+    private javax.swing.JButton btnVolverMenuPersona;
     private javax.swing.JButton btnVolverUsuario;
     private com.toedter.calendar.JDateChooser dFechaNacimiento;
     private javax.swing.JFrame jFrame1;
