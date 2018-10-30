@@ -7,6 +7,7 @@ package datos;
 
 import java.sql.ResultSet;
 import javax.swing.JTable;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,5 +31,20 @@ public class cargarDatos {
             System.out.println("Error al carga tabla"+e);
         }
     }
-    
+    public void cargarComboBox(ResultSet rs, JComboBox combo)
+    {
+        try
+        {
+            while(rs.next())
+            {
+                combo.addItem(rs.getObject(1));
+            }
+            combo.validate();
+            rs.close();
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
 }

@@ -10,6 +10,7 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Random;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
@@ -63,6 +64,45 @@ public class Conexion {
         }
     //Buscar Usuario
     }
+    public void comboBoxPersona(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT FROM  PERSONA ORDER BY RUT");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    public void comboBoxRol(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT id_rol FROM ROL");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    
+//    public int traerRolSegunNombre(String nombre)
+//    {
+//        int id = 0;
+//        try{
+//            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_ROL FROM ROL WHERE NOMBRE_ROL = '"+nombre+"'");
+//            ResultSet res = sentencia.executeQuery();
+//            while (res.next()) {
+//                id = Integer.parseInt(res.getNString(1));
+//            }
+//        }
+//        catch(Exception ex)
+//        {
+//            System.out.println(ex.getMessage());
+//        }
+//        return id;
+//    }
     public Usuario selectUsuario(int id_usuario) throws SQLException
     {
         Usuario datosUsuario = null;
