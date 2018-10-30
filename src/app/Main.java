@@ -1486,7 +1486,6 @@ public class Main extends javax.swing.JFrame {
         String nombreUsuario = String.valueOf(cbRutPersona.getSelectedItem());
         int rol = Integer.parseInt(String.valueOf(cbRol.getSelectedItem()));       
         int vigencia = Integer.parseInt(String.valueOf(cbRol.getSelectedItem())); 
-        System.out.println("Rut: " +nombreUsuario +"//Rol: "+rol + "//vigencia: "+vigencia);
         Usuario usuario = new Usuario(0,txtNuevoUsuario.getText(), txtNuevaPassword.getText(), nombreUsuario, rol, vigencia);
         if(cnn.insertUpdateUsuario(usuario, "do")== 1)
         {
