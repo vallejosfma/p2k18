@@ -41,7 +41,7 @@ public class Conexion {
     public void MostrarAlumnos(DefaultTableModel model,JTable tabla){
         
         try{
-            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,TO_CHAR(FECHA_NACIMIENTO, 'DD/MM/YYYY'),(CASE WHEN EXISTS (SELECT * FROM DOCUMENTO T2 WHERE PERSONA_RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO FROM PERSONA T1 ORDER BY RUT");
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,TO_CHAR(FECHA_NACIMIENTO, 'DD/MM/YYYY'),(CASE WHEN EXISTS (SELECT * FROM FAMILIA T2 WHERE RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO FROM PERSONA T1 ORDER BY RUT");
             ResultSet resultado = sentencia.executeQuery();
             c.cargarTabla(6, resultado, model, tabla);
         }catch(Exception ex){
@@ -50,6 +50,40 @@ public class Conexion {
         }
        
     }
+    
+    
+     //rol
+    public void MostrarRol(DefaultTableModel model,JTable tabla){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT * FROM ROL");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(2, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+       
+    }
+    
+    //Centros
+    public void MostrarCentros(DefaultTableModel model,JTable tabla){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement(" SELECT T1.ID_CEL,T1.NOMBRE_CEL,T1.DIRECCION,T2.NOMBRE,T4.NOMBRE||' '||T4.APELLIDO_PATERNO||' '||T4.APELLIDO_MATERNO FROM CEL T1 \n" +
+" INNER JOIN PAIS T2 ON T2.ID_PAIS = T1.PAIS_ID_PAIS\n" +
+" INNER JOIN USUARIO T3 ON T3.ID_USUARIO = T1.USU_ID\n" +
+" INNER JOIN PERSONA T4 ON T4.RUT = T3.PERSONA_RUT");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(5, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+       
+    }
+    
+    
     
     //MOSTRAR USUARIO
     public void MostrarUsuario(DefaultTableModel model,JTable tabla){
@@ -62,12 +96,30 @@ public class Conexion {
             System.out.println("Error al ejecutar consulta"+ex);
            
         }
+    
     //Buscar Usuario
     }
+    
+    public void MostrarPais(DefaultTableModel model,JTable tabla){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT * FROM PAIS");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(2, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    
+    //Buscar Usuario
+    }
+    
+    
+    
     public void comboBoxPersona(JComboBox combo){
         
         try{
-            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT FROM  PERSONA ORDER BY RUT");
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT, TRIM(NOMBRE||' '||APELLIDO_PATERNO||' '||APELLIDO_MATERNO) FROM  PERSONA ORDER BY RUT");
             ResultSet resultado = sentencia.executeQuery();
             c.cargarComboBox(resultado, combo);
         }catch(Exception ex){
@@ -78,7 +130,35 @@ public class Conexion {
     public void comboBoxRol(JComboBox combo){
         
         try{
-            PreparedStatement sentencia = cn.prepareStatement("SELECT id_rol FROM ROL");
+            PreparedStatement sentencia = cn.prepareStatement("SELECT id_rol,NOMBRE_ROL FROM ROL");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    
+    public void comboBoxPais(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT * FROM PAIS");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    
+    public void comboBoxEncargadoCel(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT T1.ID_USUARIO,\n" +
+" TRIM(T2.NOMBRE||' '||T2.APELLIDO_PATERNO||' '||T2.APELLIDO_MATERNO) \n" +
+" FROM USUARIO T1 INNER JOIN PERSONA T2 ON T2.RUT = T1.PERSONA_RUT\n" +
+" INNER JOIN ROL T3 ON T3.ID_ROL = T1.ROL_ID_ROL\n" +
+" WHERE T3.NOMBRE_ROL = 'ENCARGADO CEL'");
             ResultSet resultado = sentencia.executeQuery();
             c.cargarComboBox(resultado, combo);
         }catch(Exception ex){
@@ -141,8 +221,8 @@ public class Conexion {
      public Object[] consultarRut(String rut){
         Object[] datos = new Object[11];
         try {
-            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,FECHA_NACIMIENTO,EMAIL,EDAD,TELEFONO_MOVIL,TELEFONO_FIJO,(CASE WHEN EXISTS (SELECT * FROM DOCUMENTO T2 WHERE PERSONA_RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO,NVL((CASE\n" +
-" WHEN NOT EXISTS (SELECT * FROM DOCUMENTO T4 WHERE PERSONA_RUT = T1.RUT) THEN\n" +
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,FECHA_NACIMIENTO,EMAIL,EDAD,TELEFONO_MOVIL,TELEFONO_FIJO,(CASE WHEN EXISTS (SELECT * FROM FAMILIA T2 WHERE RUT = T1.RUT) THEN 'FAMILIA' ELSE 'ALUMNO' END) AS TIPO,NVL((CASE\n" +
+" WHEN NOT EXISTS (SELECT * FROM FAMILIA T4 WHERE RUT = T1.RUT) THEN\n" +
 " (SELECT NACIONALIDAD FROM ALUMNO T3 WHERE T3.RUT = T1.RUT)\n" +
 " ELSE\n" +
 " (SELECT DIRECCION FROM FAMILIA T5 WHERE T5.RUT = T1.RUT)\n" +
@@ -265,14 +345,15 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_CEL (?,?,?,?,?,?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_CEL (?,?,?,?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
             cst.setInt("p_ID_CEL", cel.getCel());
             cst.setString("p_NOMBRE_CEL",cel.getNombre_cel());
             cst.setString("p_DIRECCION", cel.getDireccion());        
             cst.setInt("p_TELEFONO", cel.getTelefono());            
             cst.setString("p_EMAIL_CONTACTO", cel.getEmail_contacto());        
-            cst.setInt("p_PAIS_ID_PAIS", cel.getPais());              
+            cst.setInt("p_PAIS_ID", cel.getPais());  
+            cst.setInt("p_USU_ID",cel.getUsu_id());
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -280,7 +361,30 @@ public class Conexion {
         }
         return flag;
     }
-
+    public Object[] consultarCentro(int id){
+        Object[] datos = new Object[6];
+        try {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT T1.NOMBRE_CEL,T1.DIRECCION,T1.TELEFONO,T1.EMAIL_CONTACTO, T2.ID_PAIS||'-'||T2.NOMBRE,\n" +
+" T1.USU_ID||'-'||TRIM(T4.NOMBRE||' '||T4.APELLIDO_PATERNO||' '||T4.APELLIDO_MATERNO)FROM CEL T1\n" +
+" INNER JOIN PAIS T2 ON T2.ID_PAIS = T1.PAIS_ID_PAIS\n" +
+" INNER JOIN USUARIO T3 ON T3.ID_USUARIO = T1.USU_ID\n" +
+" INNER JOIN PERSONA T4 ON T4.RUT = T3.PERSONA_RUT\n" +
+" WHERE T1.ID_CEL = ?");
+            sentencia.setInt(1,id);
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                datos[0] = rs.getString(1);//NOMBRE CEL
+                datos[1] = rs.getString(2);//DIRECCION
+                datos[2] = rs.getInt(3);//TELEFONO
+                datos[3] = rs.getString(4);//EMAIL                
+                datos[4] = rs.getString(5);//PAIS
+                datos[5] = rs.getString(6);//ENCARGADO                
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar"+e);
+        }
+        return datos;
+    }
     //Curso
     public int insertCurso(Curso curso, String tipo)
     {
@@ -441,9 +545,10 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ROL (?,?,?)} ");
             cst.setString("TIPO",tipo);            
-            cst.setString("p_NOMBRE_ROL",rol.getNombre_rol());            
+            cst.setString("p_NOMBRE_ROL",rol.getNombre_rol());    
+            cst.setInt("p_ID_ROL", rol.getId_rol());
             flag = cst.executeUpdate();
 
         } catch (Exception ex) {
@@ -458,14 +563,12 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_USUARIO (?,?,?,?,?,?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_USUARIO (?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
-            cst.setInt("p_ID_USUARIO", usuario.getId_usuario());
             cst.setString("p_USUARIO", usuario.getUsuario());
             cst.setString("p_PASSWORD", usuario.getContrasena());
             cst.setString("p_PERSONA_RUT", usuario.getPersona_rut());
-            cst.setInt("p_ROL_ID_ROL", usuario.getId_rol());
-            cst.setInt("p_VIGENCIA", usuario.getVigencia());
+            cst.setInt("p_ROL_ID_ROL", usuario.getId_rol());            
             
             
             flag= cst.executeUpdate();

@@ -27,6 +27,13 @@ public class Usuario {
         this.id_rol = id_rol;
         this.vigencia = vigencia;
     }
+    
+     public Usuario(String usuario, String password, String persona_rut, int id_rol) {
+        this.usuario = usuario;
+        this.password = password;
+        this.persona_rut = persona_rut;
+        this.id_rol = id_rol;       
+    }
 
     public String getPersona_rut() {
         return persona_rut;

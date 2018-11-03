@@ -23,6 +23,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Alumno;
+import modelo.Cel;
+import modelo.Familia;
+import modelo.Pais;
 import modelo.Persona;
 import modelo.Rol;
 import modelo.Usuario;
@@ -45,8 +48,7 @@ public class Main extends javax.swing.JFrame {
      */
     Conexion cnn = null;
     FileInputStream fis;
-    DefaultTableModel dtm ; 
-    DefaultTableModel dtmUsuario ;
+    DefaultTableModel dtm, dtmUsuario, dtmRol, dtmPais, dtmCentros;
 
     public Main() {
         initComponents();
@@ -67,22 +69,25 @@ public class Main extends javax.swing.JFrame {
         pPanelCentros.setVisible(false);
         pPanelPersona.setVisible(false);
         pPanelUsuario.setVisible(false);
+        pPanelPais.setVisible(false);
 
     }
-    public void volverMenu(){        
+
+    public void volverMenu() {
         pPanelCrearUsuario.setVisible(false);
         pPanelRol.setVisible(false);
         pPanelCentros.setVisible(false);
         pPanelPersona.setVisible(false);
         pPanelUsuario.setVisible(false);
+        pPanelPais.setVisible(false);
         jPanel3.setVisible(true);
     }
+
     private void setVisibleOff() {
         pPanelCrearUsuario.setVisible(false);
         pPanelRol.setVisible(false);
         pPanelCentros.setVisible(false);
-        CrearRol.setVisible(false);
-        ModificarRol.setVisible(false);
+
         pPanelPersona.setVisible(false);
     }
 
@@ -92,11 +97,32 @@ public class Main extends javax.swing.JFrame {
         }
         cnn.MostrarAlumnos(dtm, tblPersonas);
     }
+
     public void actualizarTablaUsuario() {
         while (dtmUsuario.getRowCount() > 0) {
             dtmUsuario.removeRow(0);
         }
         cnn.MostrarUsuario(dtmUsuario, tblUsuario);
+    }
+
+    public void actualizarTablaRol() {
+        while (dtmRol.getRowCount() > 0) {
+            dtmRol.removeRow(0);
+        }
+        cnn.MostrarRol(dtmRol, tblRoles);
+    }
+
+    public void actualizarTablaPais() {
+        while (dtmPais.getRowCount() > 0) {
+            dtmPais.removeRow(0);
+        }
+        cnn.MostrarPais(dtmPais, tblPaises);
+    }
+    public void actualizarTablaCentro() {
+        while (dtmCentros.getRowCount() > 0) {
+            dtmCentros.removeRow(0);
+        }
+        cnn.MostrarCentros(dtmCentros, tblCentros);
     }
 
     public void buscarPersona() {
@@ -110,6 +136,7 @@ public class Main extends javax.swing.JFrame {
             cnn.BuscarAlumnos(dtm, tblPersonas, dato);
         }
     }
+
     public void buscarUsuario() {
         String dato = txtBuscarUsuario.getText();
         if (dato.isEmpty()) {
@@ -121,21 +148,19 @@ public class Main extends javax.swing.JFrame {
             cnn.BuscarAlumnos(dtm, tblPersonas, dato);
         }
     }
-    
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         txtRut.setText(null);
-             txtNombre.setText(null);
-             txtApellidoPaterno.setText(null);
-             txtApellidoMaterno.setText(null);
-             dFechaNacimiento.setDate(null);
-             txtEmail.setText(null);
-             txtEdad.setText(null);
-             txtTelefonoMovil.setText(null);
-             txtTelefonoFijo.setText(null);
+        txtNombre.setText(null);
+        txtApellidoPaterno.setText(null);
+        txtApellidoMaterno.setText(null);
+        dFechaNacimiento.setDate(null);
+        txtEmail.setText(null);
+        txtEdad.setText(null);
+        txtTelefonoMovil.setText(null);
+        txtTelefonoFijo.setText(null);
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,34 +194,45 @@ public class Main extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnPanelCrearUsuario = new javax.swing.JButton();
+        btnPaises = new javax.swing.JButton();
         pProgramas = new javax.swing.JPanel();
         pPanelRol = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        btnRol = new javax.swing.JButton();
-        btnModificarRol = new javax.swing.JButton();
-        btnEliminarRol = new javax.swing.JButton();
-        CrearRol = new javax.swing.JLayeredPane();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        txtNombreRol = new javax.swing.JTextField();
-        lblError = new javax.swing.JLabel();
-        btnCrearRol = new javax.swing.JButton();
-        lblSuccess = new javax.swing.JLabel();
-        ModificarRol = new javax.swing.JLayeredPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TablaRoles = new javax.swing.JTable();
         btnVolver = new javax.swing.JButton();
+        tabRoles = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblRoles = new javax.swing.JTable();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JTextField();
+        btnCrearRol = new javax.swing.JButton();
+        btnModificarRol = new javax.swing.JButton();
         pPanelCentros = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         btnVolver1 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
+        tabCentros = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCentros = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         txtBuscarCentro = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        txtNombreCentro = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        txtDireccionCentro = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        txtTelefonoCentro = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        txtEmailCentro = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        btnCrearCentro = new javax.swing.JButton();
+        btnModificarCentro = new javax.swing.JButton();
+        cmbPaisCentro = new javax.swing.JComboBox<>();
+        jLabel37 = new javax.swing.JLabel();
+        cmbEncargado = new javax.swing.JComboBox<>();
         pPanelPersona = new javax.swing.JPanel();
         TabPersona = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
@@ -255,14 +291,25 @@ public class Main extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         txtNuevoUsuario = new javax.swing.JTextField();
         txtNuevaPassword = new javax.swing.JTextField();
         cbRutPersona = new javax.swing.JComboBox<>();
         cbRol = new javax.swing.JComboBox<>();
-        cbVigencia = new javax.swing.JComboBox<>();
         btnCrearUsuario = new javax.swing.JButton();
         lblErrorCrearUsuario = new javax.swing.JLabel();
+        pPanelPais = new javax.swing.JPanel();
+        tabPais = new javax.swing.JTabbedPane();
+        jPanel11 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPaises = new javax.swing.JTable();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        txtPais = new javax.swing.JTextField();
+        btnCrearPais = new javax.swing.JButton();
+        btnModificarPais = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -363,7 +410,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(pPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(247, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -375,15 +422,19 @@ public class Main extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Administrar Postulaciones");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 276, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Administrar Programas");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 309, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Generar Certificados");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 342, -1, -1));
 
         btnRoles.setText("Administrar Roles");
         btnRoles.addActionListener(new java.awt.event.ActionListener() {
@@ -391,6 +442,7 @@ public class Main extends javax.swing.JFrame {
                 btnRolesActionPerformed(evt);
             }
         });
+        jPanel2.add(btnRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 375, 137, -1));
 
         btnAdministrarCentros.setText("Administrar Centros");
         btnAdministrarCentros.addActionListener(new java.awt.event.ActionListener() {
@@ -398,6 +450,7 @@ public class Main extends javax.swing.JFrame {
                 btnAdministrarCentrosActionPerformed(evt);
             }
         });
+        jPanel2.add(btnAdministrarCentros, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 59, 140, -1));
 
         txtAdministrarPersona.setText("Administrar Persona");
         txtAdministrarPersona.addActionListener(new java.awt.event.ActionListener() {
@@ -405,6 +458,7 @@ public class Main extends javax.swing.JFrame {
                 txtAdministrarPersonaActionPerformed(evt);
             }
         });
+        jPanel2.add(txtAdministrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 137, 140, -1));
 
         btnUsuarios.setText("Administrar Usuarios");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -412,8 +466,10 @@ public class Main extends javax.swing.JFrame {
                 btnUsuariosActionPerformed(evt);
             }
         });
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 96, 140, -1));
 
         jButton1.setText("Publicar Programa");
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 140, -1));
 
         btnPanelCrearUsuario.setText("Crear Usuario");
         btnPanelCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -421,50 +477,15 @@ public class Main extends javax.swing.JFrame {
                 btnPanelCrearUsuarioActionPerformed(evt);
             }
         });
+        jPanel2.add(btnPanelCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 178, 140, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addComponent(jLabel11))
-                    .addComponent(txtAdministrarPersona)
-                    .addComponent(btnUsuarios)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdministrarCentros, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnPanelCrearUsuario))
-                .addContainerGap(67, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(btnAdministrarCentros)
-                .addGap(14, 14, 14)
-                .addComponent(btnUsuarios)
-                .addGap(18, 18, 18)
-                .addComponent(txtAdministrarPersona)
-                .addGap(18, 18, 18)
-                .addComponent(btnPanelCrearUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addGap(18, 18, 18)
-                .addComponent(btnRoles)
-                .addGap(45, 45, 45))
-        );
+        btnPaises.setText("Administrar Paises");
+        btnPaises.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPaisesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnPaises, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 140, -1));
 
         pProgramas.setBackground(new java.awt.Color(204, 204, 255));
         pProgramas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -473,11 +494,11 @@ public class Main extends javax.swing.JFrame {
         pProgramas.setLayout(pProgramasLayout);
         pProgramasLayout.setHorizontalGroup(
             pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
         pProgramasLayout.setVerticalGroup(
             pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -486,15 +507,13 @@ public class Main extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(6, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,9 +522,9 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(50, 50, 50)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pProgramas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(pProgramas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pPanelRol.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -514,97 +533,16 @@ public class Main extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel14.setText("Administrar Roles");
 
-        btnRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnRol.setText("Crear Rol");
-        btnRol.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRolActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
-        btnModificarRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnModificarRol.setText("Modificar Rol");
-        btnModificarRol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarRolActionPerformed(evt);
-            }
-        });
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEliminarRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnEliminarRol.setText("Eliminar Rol");
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel17.setText("Nombre del Rol");
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel16.setText("Roles");
-
-        lblError.setForeground(new java.awt.Color(255, 0, 0));
-
-        btnCrearRol.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnCrearRol.setText("Crear Rol");
-        btnCrearRol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearRolActionPerformed(evt);
-            }
-        });
-
-        lblSuccess.setForeground(new java.awt.Color(51, 255, 51));
-
-        CrearRol.setLayer(jLabel17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        CrearRol.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        CrearRol.setLayer(txtNombreRol, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        CrearRol.setLayer(lblError, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        CrearRol.setLayer(btnCrearRol, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        CrearRol.setLayer(lblSuccess, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout CrearRolLayout = new javax.swing.GroupLayout(CrearRol);
-        CrearRol.setLayout(CrearRolLayout);
-        CrearRolLayout.setHorizontalGroup(
-            CrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CrearRolLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(178, 178, 178))
-            .addGroup(CrearRolLayout.createSequentialGroup()
-                .addGroup(CrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CrearRolLayout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CrearRolLayout.createSequentialGroup()
-                        .addGap(253, 253, 253)
-                        .addGroup(CrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnCrearRol, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSuccess, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(87, Short.MAX_VALUE))
-        );
-        CrearRolLayout.setVerticalGroup(
-            CrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CrearRolLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(CrearRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CrearRolLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CrearRolLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(btnCrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSuccess, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
-        );
-
-        ModificarRol.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        TablaRoles.setModel(new javax.swing.table.DefaultTableModel(
+        tblRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -615,45 +553,57 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(TablaRoles);
-
-        ModificarRol.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 619, 244));
-
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+        tblRoles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRolesMouseClicked(evt);
             }
         });
+        jScrollPane6.setViewportView(tblRoles);
+
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 660, 350));
+
+        tabRoles.addTab("Buscar Rol", jPanel1);
+
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel12.setText("Nombre del Rol");
+        jPanel10.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 150, 70));
+
+        jLabel16.setText("Rol");
+        jPanel10.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 150, 70));
+        jPanel10.add(txtRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 330, -1));
+
+        btnCrearRol.setText("Nuevo");
+        btnCrearRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearRolActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnCrearRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 130, 60));
+
+        btnModificarRol.setText("Modificar");
+        btnModificarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarRolActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnModificarRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 150, 60));
+
+        tabRoles.addTab("Crear Rol", jPanel10);
 
         javax.swing.GroupLayout pPanelRolLayout = new javax.swing.GroupLayout(pPanelRol);
         pPanelRol.setLayout(pPanelRolLayout);
         pPanelRolLayout.setHorizontalGroup(
             pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pPanelRolLayout.createSequentialGroup()
-                .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pPanelRolLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(CrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pPanelRolLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pPanelRolLayout.createSequentialGroup()
-                                .addComponent(btnVolver)
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pPanelRolLayout.createSequentialGroup()
-                                .addComponent(btnRol, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(btnModificarRol)
-                                .addGap(72, 72, 72)
-                                .addComponent(btnEliminarRol)))))
-                .addGap(70, 70, 70))
-            .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pPanelRolLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ModificarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(88, 88, 88)
+                .addComponent(btnVolver)
+                .addGap(94, 94, 94)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pPanelRolLayout.createSequentialGroup()
+                .addComponent(tabRoles)
+                .addContainerGap())
         );
         pPanelRolLayout.setVerticalGroup(
             pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,19 +615,9 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(pPanelRolLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(btnVolver)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRol, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CrearRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(pPanelRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pPanelRolLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(ModificarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(8, 8, 8)
+                .addComponent(tabRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pPanelCentros.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -693,19 +633,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 759, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Crear Centro", jPanel4);
-
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblCentros.setModel(new javax.swing.table.DefaultTableModel(
@@ -719,6 +646,11 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblCentros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCentrosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblCentros);
 
         jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 700, 310));
@@ -728,20 +660,53 @@ public class Main extends javax.swing.JFrame {
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 70, 30));
         jPanel5.add(txtBuscarCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 540, -1));
 
-        jTabbedPane1.addTab("Modificar Centro", jPanel5);
+        tabCentros.addTab("Centros", jPanel5);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 759, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
-        );
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.addTab("Eliminar Centro", jPanel6);
+        jLabel32.setText("Nombre Centro de estudio");
+        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 51, -1, -1));
+        jPanel6.add(txtNombreCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 48, 145, -1));
+
+        jLabel33.setText("Dirección");
+        jPanel6.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 51, -1, -1));
+        jPanel6.add(txtDireccionCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 48, 215, -1));
+
+        jLabel34.setText("Teléfono");
+        jPanel6.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 101, -1, -1));
+        jPanel6.add(txtTelefonoCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 86, 145, -1));
+
+        jLabel35.setText("Email");
+        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 101, -1, -1));
+        jPanel6.add(txtEmailCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 98, 215, -1));
+
+        jLabel36.setText("Pais");
+        jPanel6.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+
+        btnCrearCentro.setText("Nuevo");
+        btnCrearCentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCentroActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnCrearCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 150, 40));
+
+        btnModificarCentro.setText("Modificar");
+        btnModificarCentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarCentroActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnModificarCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 160, 40));
+
+        jPanel6.add(cmbPaisCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 160, -1));
+
+        jLabel37.setText("Encargado CEL");
+        jPanel6.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
+
+        jPanel6.add(cmbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 210, -1));
+
+        tabCentros.addTab("Crear Centro", jPanel6);
 
         javax.swing.GroupLayout pPanelCentrosLayout = new javax.swing.GroupLayout(pPanelCentros);
         pPanelCentros.setLayout(pPanelCentrosLayout);
@@ -755,7 +720,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(239, 239, 239))
             .addGroup(pPanelCentrosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pPanelCentrosLayout.setVerticalGroup(
@@ -769,7 +734,7 @@ public class Main extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
-                .addComponent(jTabbedPane1)
+                .addComponent(tabCentros)
                 .addContainerGap())
         );
 
@@ -797,7 +762,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblPersonas);
 
-        jPanel8.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 121, 790, 390));
+        jPanel8.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 121, 760, 390));
 
         jLabel13.setText("Buscar");
         jPanel8.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
@@ -922,7 +887,7 @@ public class Main extends javax.swing.JFrame {
 
         TabPersona.addTab("Crear Persona", jPanel7);
 
-        pPanelPersona.add(TabPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 590));
+        pPanelPersona.add(TabPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
 
         pPanelUsuario.setMinimumSize(new java.awt.Dimension(800, 600));
         pPanelUsuario.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -1011,26 +976,18 @@ public class Main extends javax.swing.JFrame {
         pPanelCrearUsuario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
         jLabel7.setText("Rut Persona");
-        pPanelCrearUsuario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
+        pPanelCrearUsuario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
 
         jLabel8.setText("Rol");
         pPanelCrearUsuario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
-
-        jLabel30.setText("Vigencia");
-        pPanelCrearUsuario.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, -1));
         pPanelCrearUsuario.add(txtNuevoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 110, -1));
         pPanelCrearUsuario.add(txtNuevaPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 110, -1));
 
         cbRutPersona.setMaximumRowCount(999);
-        pPanelCrearUsuario.add(cbRutPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        pPanelCrearUsuario.add(cbRutPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
 
         cbRol.setMaximumRowCount(10);
         pPanelCrearUsuario.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
-
-        cbVigencia.setMaximumRowCount(2);
-        cbVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
-        cbVigencia.setSelectedIndex(1);
-        pPanelCrearUsuario.add(cbVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, -1));
 
         btnCrearUsuario.setText("Crear Usuario");
         btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -1040,6 +997,115 @@ public class Main extends javax.swing.JFrame {
         });
         pPanelCrearUsuario.add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
         pPanelCrearUsuario.add(lblErrorCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tblPaises.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblPaises.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPaisesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPaises);
+
+        jPanel11.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 575, 344));
+
+        tabPais.addTab("Pais", jPanel11);
+
+        jLabel30.setText("Pais");
+
+        jLabel31.setText("Nombre del pais");
+
+        btnCrearPais.setText("Nuevo");
+        btnCrearPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearPaisActionPerformed(evt);
+            }
+        });
+
+        btnModificarPais.setText("Modificar");
+        btnModificarPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarPaisActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(btnCrearPais, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(147, 147, 147)
+                        .addComponent(btnModificarPais, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel31)
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(129, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel30)
+                .addGap(98, 98, 98)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(125, 125, 125)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnModificarPais, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(btnCrearPais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+
+        tabPais.addTab("Crear Pais", jPanel12);
+
+        jButton3.setText("Volver");
+
+        jLabel17.setText("Paises");
+
+        javax.swing.GroupLayout pPanelPaisLayout = new javax.swing.GroupLayout(pPanelPais);
+        pPanelPais.setLayout(pPanelPaisLayout);
+        pPanelPaisLayout.setHorizontalGroup(
+            pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelPaisLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPanelPaisLayout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(206, 206, 206)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tabPais, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        pPanelPaisLayout.setVerticalGroup(
+            pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelPaisLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabPais, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1071,6 +1137,11 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -1104,6 +1175,11 @@ public class Main extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pPanelLogin.getAccessibleContext().setAccessibleName("");
@@ -1130,63 +1206,47 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void btnRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolActionPerformed
-        // TODO add your handling code here:
-//        pCrearRol.setVisible(true);
-        ModificarRol.setVisible(false);
-        CrearRol.setVisible(true);
-
-    }//GEN-LAST:event_btnRolActionPerformed
-
-    private void btnModificarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarRolActionPerformed
-        // TODO add your handling code here:
-        CrearRol.setVisible(false);
-        ModificarRol.setVisible(true);
-
-
-    }//GEN-LAST:event_btnModificarRolActionPerformed
-
     private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
-        // TODO add your handling code here:
+
         jPanel3.setVisible(false);
         pPanelRol.setVisible(true);
-    }//GEN-LAST:event_btnRolesActionPerformed
 
-    private void btnCrearRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRolActionPerformed
-        Conexion cnn = null;
-        try {
-            cnn = new Conexion();
-        } catch (SQLException ex) {
-
-        }
-        String nombreRol = txtNombreRol.getText();
-        if (nombreRol.isEmpty()) {
-            lblError.setText("* Recuerda Ingresa el nombre del Rol a crear");
-            lblError.setVisible(true);
-        } else {
-            lblError.setVisible(false);
-            Rol r1 = new Rol(nombreRol);
-            int res = cnn.insertUpdateRol(r1, "do");
-            if (res > 0) {
-                lblSuccess.setText("Rol Ingresado Correctamente");
-                lblSuccess.setVisible(true);
-            } else {
-                lblSuccess.setVisible(false);
-                lblError.setText("Error al insertar el rol");
-                lblError.setVisible(true);
+        dtmRol = new DefaultTableModel() {
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
             }
-        }
-    }//GEN-LAST:event_btnCrearRolActionPerformed
+        };
+        tblRoles.setModel(dtmRol);
+        dtmRol.addColumn("ID Rol");
+        dtmRol.addColumn("Nombre Rol");
+
+        cnn.MostrarRol(dtmRol, tblRoles);
+        tblRoles.getTableHeader().setReorderingAllowed(false);
+    }//GEN-LAST:event_btnRolesActionPerformed
 
     private void btnAdministrarCentrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarCentrosActionPerformed
         // TODO add your handling code here:
         jPanel3.setVisible(false);
         pPanelCentros.setVisible(true);
+        cnn.comboBoxPais(cmbPaisCentro);
+        cnn.comboBoxEncargadoCel(cmbEncargado);
+        dtmCentros = new DefaultTableModel() {
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tblCentros.setModel(dtmCentros);
+        dtmCentros.addColumn("ID Centro");
+        dtmCentros.addColumn("Nombre Centro");
+        dtmCentros.addColumn("Dirección");
+        dtmCentros.addColumn("País");
+        dtmCentros.addColumn("Encargado");
+        cnn.MostrarCentros(dtmCentros, tblCentros);
+        tblCentros.getTableHeader().setReorderingAllowed(false);
     }//GEN-LAST:event_btnAdministrarCentrosActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-        jPanel3.setVisible(true);
+        volverMenu();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnVolver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolver1ActionPerformed
@@ -1205,9 +1265,9 @@ public class Main extends javax.swing.JFrame {
         jPanel3.setVisible(false);
         pPanelPersona.setVisible(true);
         dtm = new DefaultTableModel() {
-        public boolean isCellEditable(int fila, int columna) {
-            return false;
-        }
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
         };
         tblPersonas.setModel(dtm);
         dtm.addColumn("Rut");
@@ -1228,148 +1288,151 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnFamiliaActionPerformed
 
     private void txtBuscarPersonaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarPersonaCaretUpdate
-         // TODO add your handling code here:
-         buscarPersona();
+        // TODO add your handling code here:
+        buscarPersona();
     }//GEN-LAST:event_txtBuscarPersonaCaretUpdate
 
     private void tblPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPersonasMouseClicked
-         // TODO add your handling code here:
-         if(evt.getClickCount() == 2){
-             limpiarCampos();
-             boolean consultar = true;
-             int fila = tblPersonas.getSelectedRow();
-             String rut = tblPersonas.getValueAt(fila,0).toString();
-             Object[] datos = cnn.consultarRut(rut);
-             txtRut.setText(datos[0].toString());
-             txtNombre.setText(datos[1].toString());
-             txtApellidoPaterno.setText(datos[2].toString());
-             txtApellidoMaterno.setText(datos[3].toString());
-             dFechaNacimiento.setDate((Date)datos[4]);
-             txtEmail.setText(datos[5].toString());
-             txtEdad.setText(datos[6].toString());
-             txtTelefonoMovil.setText(datos[7].toString());
-             txtTelefonoFijo.setText(datos[8].toString());
-             String tipo = datos[9].toString();
-             if(tipo.equals("ALUMNO")){
-                 txtNacionalidad.setEnabled(true);
-                 txtNacionalidad.setText(datos[10].toString());
-                 txtDireccion.setText(null);
-                 txtDireccion.setEnabled(false);
-                 btnArchivos.setEnabled(false);
-                 rbtnAlumno.setSelected(true);
-             }else{
-                 txtNacionalidad.setText(null);
-                 txtDireccion.setEnabled(true);
-                 btnArchivos.setEnabled(true);
-                 txtDireccion.setText(datos[10].toString());
-                 txtNacionalidad.setEnabled(false);
-                 rbtnFamilia.setSelected(true);
-             }
-             TabPersona.setSelectedIndex(1);
-             btnModificarPersona.setEnabled(true);
-             btnEliminarPersona.setEnabled(true);
-         }
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            limpiarCampos();
+            boolean consultar = true;
+            int fila = tblPersonas.getSelectedRow();
+            String rut = tblPersonas.getValueAt(fila, 0).toString();
+            Object[] datos = cnn.consultarRut(rut);
+            txtRut.setText(datos[0].toString());
+            txtNombre.setText(datos[1].toString());
+            txtApellidoPaterno.setText(datos[2].toString());
+            txtApellidoMaterno.setText(datos[3].toString());
+            dFechaNacimiento.setDate((Date) datos[4]);
+            txtEmail.setText(datos[5].toString());
+            txtEdad.setText(datos[6].toString());
+            txtTelefonoMovil.setText(datos[7].toString());
+            txtTelefonoFijo.setText(datos[8].toString());
+            String tipo = datos[9].toString();
+            if (tipo.equals("ALUMNO")) {
+                txtNacionalidad.setEnabled(true);
+                txtNacionalidad.setText(datos[10].toString());
+                txtDireccion.setText(null);
+                txtDireccion.setEnabled(false);
+                btnArchivos.setEnabled(false);
+                rbtnAlumno.setSelected(true);
+            } else {
+
+                rbtnFamilia.setSelected(true);
+                txtNacionalidad.setText(null);
+                txtDireccion.setEnabled(true);
+                btnArchivos.setEnabled(true);
+                txtDireccion.setText(datos[10].toString());
+                txtNacionalidad.setEnabled(false);
+
+            }
+            TabPersona.setSelectedIndex(1);
+            btnModificarPersona.setEnabled(true);
+            btnEliminarPersona.setEnabled(true);
+        }
     }//GEN-LAST:event_tblPersonasMouseClicked
 
     private void txtNuevaPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaPersonaActionPerformed
         // TODO add your handling code here:
-         if(rbtnAlumno.isSelected() || rbtnFamilia.isSelected()){
-           String rut =  txtRut.getText();
-            if(cnn.verificarRut(rut)== 0){
+        if (rbtnAlumno.isSelected() || rbtnFamilia.isSelected()) {
+            String rut = txtRut.getText();
+            if (cnn.verificarRut(rut) == 0) {
                 String nombre = txtNombre.getText();
-              String apellido_p = txtApellidoPaterno.getText();
-              String apellido_m = txtApellidoMaterno.getText();
-              java.util.Date fecha_nacimiento = dFechaNacimiento.getDate();
-              java.sql.Date fecha_final = new java.sql.Date(fecha_nacimiento.getTime());
-              String email = txtEmail.getText();
-              int edad = Integer.parseInt(txtEdad.getText());
-              int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
-              int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
-              Persona p = new Persona(rut,nombre,apellido_p,apellido_m,fecha_final,email,edad,telefono_m,telefono_f);
-              
-              int res = cnn.insertUpdatePersona(p, "do");
-               if(res>0){
-                 limpiarCampos();
-                 actualizarTabla();
-                 if(rbtnAlumno.isSelected()){
-                  String nacionalidad = txtNacionalidad.getText();
-                  Alumno a = new Alumno(rut,nacionalidad);
-                  int resp = cnn.insertAlumno(a);
-                  }else{
-                     
-                 }
-                 JOptionPane.showMessageDialog(null, "Se ha creado la persona correctamente");
-                 }else{
-                     JOptionPane.showMessageDialog(null, "Hubo un error al crear la persona");
-                 }
-            }else{
+                String apellido_p = txtApellidoPaterno.getText();
+                String apellido_m = txtApellidoMaterno.getText();
+                java.util.Date fecha_nacimiento = dFechaNacimiento.getDate();
+                java.sql.Date fecha_final = new java.sql.Date(fecha_nacimiento.getTime());
+                String email = txtEmail.getText();
+                int edad = Integer.parseInt(txtEdad.getText());
+                int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
+                int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
+                Persona p = new Persona(rut, nombre, apellido_p, apellido_m, fecha_final, email, edad, telefono_m, telefono_f);
+
+                int res = cnn.insertUpdatePersona(p, "do");
+                if (res > 0) {
+                    limpiarCampos();
+                    actualizarTabla();
+                    if (rbtnAlumno.isSelected()) {
+                        String nacionalidad = txtNacionalidad.getText();
+                        Alumno a = new Alumno(rut, nacionalidad);
+                        int resp = cnn.insertAlumno(a);
+                    } else {
+                        String direccion = txtDireccion.getText();
+                        Familia f = new Familia(rut, direccion);
+                        int resp = cnn.insertUpdateFamilia(f, "do");
+                    }
+                    JOptionPane.showMessageDialog(null, "Se ha creado la persona correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Hubo un error al crear la persona");
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "El rut ingresado ya posee un usuario");
             }
-                  
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a crear");
         }
-             
+
     }//GEN-LAST:event_txtNuevaPersonaActionPerformed
 
     private void btnModificarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPersonaActionPerformed
         // TODO add your handling code here:
-        if(rbtnAlumno.isSelected() || rbtnFamilia.isSelected()){
-            String rut =  txtRut.getText();
-             String nombre = txtNombre.getText();
-             String apellido_p = txtApellidoPaterno.getText();
-             String apellido_m = txtApellidoMaterno.getText();
-             java.util.Date fecha_nacimiento = dFechaNacimiento.getDate();
-             java.sql.Date fecha_final = new java.sql.Date(fecha_nacimiento.getTime());
-             String email = txtEmail.getText();
-             int edad = Integer.parseInt(txtEdad.getText());
-             int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
-             int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
-             Persona p = new Persona(rut,nombre,apellido_p,apellido_m,fecha_final,email,edad,telefono_m,telefono_f);
-             int res = cnn.insertUpdatePersona(p, "set");
-             if(res>0){
+        if (rbtnAlumno.isSelected() || rbtnFamilia.isSelected()) {
+            String rut = txtRut.getText();
+            String nombre = txtNombre.getText();
+            String apellido_p = txtApellidoPaterno.getText();
+            String apellido_m = txtApellidoMaterno.getText();
+            java.util.Date fecha_nacimiento = dFechaNacimiento.getDate();
+            java.sql.Date fecha_final = new java.sql.Date(fecha_nacimiento.getTime());
+            String email = txtEmail.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            int telefono_m = Integer.parseInt(txtTelefonoMovil.getText());
+            int telefono_f = Integer.parseInt(txtTelefonoFijo.getText());
+            Persona p = new Persona(rut, nombre, apellido_p, apellido_m, fecha_final, email, edad, telefono_m, telefono_f);
+            int res = cnn.insertUpdatePersona(p, "set");
+            if (res > 0) {
                 limpiarCampos();
                 actualizarTabla();
                 JOptionPane.showMessageDialog(null, "Se ha modificado la persona correctamente");
-                }else{
-                    JOptionPane.showMessageDialog(null, "Hubo un error al modificar la persona");
-                }
-             }else{
-                 JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a modificar");
-             }
+            } else {
+                JOptionPane.showMessageDialog(null, "Hubo un error al modificar la persona");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar el tipo de Persona a modificar");
+        }
     }//GEN-LAST:event_btnModificarPersonaActionPerformed
 
     private void btnArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivosActionPerformed
-         // TODO add your handling code here:
-         JFileChooser fileChooser = new JFileChooser();
-         int returnVal = fileChooser.showOpenDialog(null);        
-         fileChooser.setMultiSelectionEnabled(true);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                rsdragdropfiles.RSDragDropFiles.setCopiar(fileChooser.getSelectedFile().toString(), "src/documentos/imagen.png");
-                 FileInputStream fis = null;
-                BufferedInputStream bis = null;
-                DataInputStream dis = null;
-                try {
-                    fis = new FileInputStream(file);
-                    
-                } catch (Exception e) {
-                }
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(null);
+        fileChooser.setMultiSelectionEnabled(true);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            rsdragdropfiles.RSDragDropFiles.setCopiar(fileChooser.getSelectedFile().toString(), "src/documentos/imagen.png");
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            DataInputStream dis = null;
+            try {
+                fis = new FileInputStream(file);
+
+            } catch (Exception e) {
             }
-            
+        }
+
     }//GEN-LAST:event_btnArchivosActionPerformed
-    private void limpiarTablaUsuario()
-    {
+    private void limpiarTablaUsuario() {
         dtmUsuario.setRowCount(0);
     }
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         jPanel3.setVisible(false);
         pPanelUsuario.setVisible(true);
-        lblErrorVigencia.setVisible(false);       
+        lblErrorVigencia.setVisible(false);
         dtmUsuario = new DefaultTableModel() {
-        public boolean isCellEditable(int fila, int columna) {
-            return false;
-        }
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
         };
         tblUsuario.setModel(dtmUsuario);
         dtmUsuario.addColumn("ID Usuario");
@@ -1403,40 +1466,36 @@ public class Main extends javax.swing.JFrame {
         lblErrorVigencia.setVisible(false);
         if (rbActiva.isSelected()) {
             cuentaActiva = 1;
-        }
-        else
-        {
+        } else {
             cuentaActiva = 0;
         }
-        
+
         int id = Integer.parseInt(txtIdVigencia.getText());
-        Usuario user= null;
+        Usuario user = null;
         try {
             user = cnn.selectUsuario(id);
         } catch (SQLException ex) {
-            lblErrorVigencia.setText("Error SQL: "+ex.getMessage());
+            lblErrorVigencia.setText("Error SQL: " + ex.getMessage());
             lblErrorVigencia.setVisible(true);
-            
+
         }
         if (user != null) {
             lblErrorVigencia.setVisible(false);
             user.setVigencia(cuentaActiva);
-            int res =cnn.insertUpdateUsuario(user, "set");
-            if(res>0){
+            int res = cnn.insertUpdateUsuario(user, "set");
+            if (res > 0) {
                 limpiarTablaUsuario();
                 actualizarTablaUsuario();
                 JOptionPane.showMessageDialog(null, "Se ha actualizado la vigencia correctamente");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la vigencia");
             }
-        }
-        else
-        {
+        } else {
             lblErrorVigencia.setText("Error al cambiar Usuario");
             lblErrorVigencia.setVisible(true);
         }
 
-        
+
     }//GEN-LAST:event_btnCambiarVigenciaActionPerformed
 
     private void btnVolverMenuPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverMenuPersonaActionPerformed
@@ -1484,21 +1543,166 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
         String nombreUsuario = String.valueOf(cbRutPersona.getSelectedItem());
-        int rol = Integer.parseInt(String.valueOf(cbRol.getSelectedItem()));       
-        int vigencia = Integer.parseInt(String.valueOf(cbRol.getSelectedItem())); 
-        Usuario usuario = new Usuario(0,txtNuevoUsuario.getText(), txtNuevaPassword.getText(), nombreUsuario, rol, vigencia);
-        if(cnn.insertUpdateUsuario(usuario, "do")== 1)
-        {
+        String[] nombreFinal = nombreUsuario.split("-");
+        String rol = String.valueOf(cbRol.getSelectedItem());
+        String[] rolFinal = rol.split("-");
+        int idRol = Integer.parseInt(rolFinal[0]);
+        Usuario usuario = new Usuario(txtNuevoUsuario.getText(), txtNuevaPassword.getText(), nombreFinal[0], idRol);
+        if (cnn.insertUpdateUsuario(usuario, "do") == 1) {
             lblErrorCrearUsuario.setText("Agregado Correctamente");
             lblErrorCrearUsuario.setVisible(true);
-        }
-        else
-        {
+        } else {
             lblErrorCrearUsuario.setText("No se pudo agregar usuario");
             lblErrorCrearUsuario.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+
+    private void tblRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesMouseClicked
+        if (evt.getClickCount() == 2) {
+            int fila = tblRoles.getSelectedRow();
+            String NombreRol = tblRoles.getValueAt(fila, 1).toString();
+            txtRol.setText(NombreRol);
+            btnCrearRol.setEnabled(false);
+            tabRoles.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_tblRolesMouseClicked
+
+    private void btnModificarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarRolActionPerformed
+        int fila = tblRoles.getSelectedRow();
+        int idRol = Integer.parseInt(tblRoles.getValueAt(fila, 0).toString());
+        String NombreRol = txtRol.getText();
+        Rol r = new Rol(idRol, NombreRol);
+        if (cnn.insertUpdateRol(r, "set") == 1) {
+            txtRol.setText(null);
+            actualizarTablaRol();
+            JOptionPane.showMessageDialog(null, "Se ha actualizado el Rol correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el rol");
+        }
+    }//GEN-LAST:event_btnModificarRolActionPerformed
+
+    private void btnPaisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaisesActionPerformed
+        jPanel3.setVisible(false);
+        pPanelPais.setVisible(true);
+
+        dtmPais = new DefaultTableModel() {
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tblPaises.setModel(dtmPais);
+        dtmPais.addColumn("ID Pais");
+        dtmPais.addColumn("Nombre Pais");
+        cnn.MostrarPais(dtmPais, tblPaises);
+        tblPaises.getTableHeader().setReorderingAllowed(false);
+    }//GEN-LAST:event_btnPaisesActionPerformed
+
+    private void btnCrearPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPaisActionPerformed
+        String nombrePais = txtPais.getText();
+        Pais p = new Pais(nombrePais);
+        if (cnn.insertUpdatePais(p, "do") == 1) {
+            actualizarTablaPais();
+            txtPais.setText(null);
+            JOptionPane.showMessageDialog(null, "Se agregó un pais correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al crear el pais");
+        }
+    }//GEN-LAST:event_btnCrearPaisActionPerformed
+
+    private void tblPaisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPaisesMouseClicked
+        if (evt.getClickCount() == 2) {
+            int fila = tblPaises.getSelectedRow();
+            txtPais.setText(tblPaises.getValueAt(fila, 1).toString());
+            tabPais.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_tblPaisesMouseClicked
+
+    private void btnModificarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPaisActionPerformed
+        int fila = tblPaises.getSelectedRow();
+        int idPais = Integer.parseInt(tblPaises.getValueAt(fila, 0).toString());
+        String pais = txtPais.getText();
+        Pais p = new Pais(idPais, pais);
+        if (cnn.insertUpdatePais(p, "set") == 1) {
+            actualizarTablaPais();
+            txtPais.setText(null);
+            JOptionPane.showMessageDialog(null, "Se modificó un pais correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al modificar el pais");
+        }
+    }//GEN-LAST:event_btnModificarPaisActionPerformed
+
+    private void btnCrearRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRolActionPerformed
+        // TODO add your handling code here:
+        String nombreRol = txtRol.getText();
+        Rol r = new Rol(nombreRol);
+        if (cnn.insertUpdateRol(r, "do") == 1) {
+            JOptionPane.showMessageDialog(null, "Se creó correctamente el Rol");
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al crear el rol");
+        }
+    }//GEN-LAST:event_btnCrearRolActionPerformed
+
+    private void btnCrearCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCentroActionPerformed
+        String nombreCel = txtNombreCentro.getText();
+        String direccion = txtDireccionCentro.getText();
+        int telefono = Integer.parseInt(txtTelefonoCentro.getText());
+        String email = txtEmailCentro.getText();
+        String pais = String.valueOf(cmbPaisCentro.getSelectedItem());
+        String[] paisID = pais.split("-");
+        String usuario = String.valueOf(cmbEncargado.getSelectedItem());
+        String[] usuId = usuario.split("-");
+        Cel c = new Cel(nombreCel, direccion, telefono, email, Integer.parseInt(paisID[0]), Integer.parseInt(usuId[0]));
+        if (cnn.insertUpdateCel(c, "do") == 1) {
+            actualizarTablaCentro();
+            txtNombreCentro.setText(null);
+            txtDireccionCentro.setText(null);
+            txtTelefonoCentro.setText(null);
+            txtEmailCentro.setText(null);
+            JOptionPane.showMessageDialog(null, "Se creó correctamente el Centro de estudio");
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al crear el centro de estudio");
+        }
+    }//GEN-LAST:event_btnCrearCentroActionPerformed
+
+    private void tblCentrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCentrosMouseClicked
+        if (evt.getClickCount() == 2) {
+            int fila = tblCentros.getSelectedRow();
+            int id = Integer.parseInt(tblCentros.getValueAt(fila, 0).toString());
+            Object[] res = cnn.consultarCentro(id);
+            txtNombreCentro.setText(res[0].toString());
+            txtDireccionCentro.setText(res[1].toString());
+            txtTelefonoCentro.setText(res[2].toString());
+            txtEmailCentro.setText(res[3].toString());
+            cmbPaisCentro.setSelectedItem(res[4].toString());
+            cmbEncargado.setSelectedItem(res[5].toString());
+            tabCentros.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_tblCentrosMouseClicked
+
+    private void btnModificarCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCentroActionPerformed
+        int fila = tblCentros.getSelectedRow();
+        int id = Integer.parseInt(tblCentros.getValueAt(fila, 0).toString());
+        String nombreCel = txtNombreCentro.getText();
+        String direccion = txtDireccionCentro.getText();
+        int telefono = Integer.parseInt(txtTelefonoCentro.getText());
+        String email = txtEmailCentro.getText();
+        String pais = String.valueOf(cmbPaisCentro.getSelectedItem());
+        String[] paisID = pais.split("-");
+        String usuario = String.valueOf(cmbEncargado.getSelectedItem());
+        String[] usuId = usuario.split("-");
+        Cel c = new Cel(id,nombreCel, direccion, telefono, email, Integer.parseInt(paisID[0]), Integer.parseInt(usuId[0]));
+        if (cnn.insertUpdateCel(c, "set") == 1) {
+            txtNombreCentro.setText(null);
+            txtDireccionCentro.setText(null);
+            txtTelefonoCentro.setText(null);
+            txtEmailCentro.setText(null);
+            actualizarTablaCentro();
+            JOptionPane.showMessageDialog(null, "Se modifico correctamente el Centro de estudio");
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al modificar el centro de estudio");
+        }
+    }//GEN-LAST:event_btnModificarCentroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1536,24 +1740,24 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane CrearRol;
-    private javax.swing.JLayeredPane ModificarRol;
     private javax.swing.JTabbedPane TabPersona;
-    private javax.swing.JTable TablaRoles;
     private javax.swing.JButton btnAdministrarCentros;
     private javax.swing.JButton btnArchivos;
     private javax.swing.JButton btnCambiarVigencia;
+    private javax.swing.JButton btnCrearCentro;
+    private javax.swing.JButton btnCrearPais;
     private javax.swing.JButton btnCrearRol;
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnEliminarPersona;
-    private javax.swing.JButton btnEliminarRol;
     private javax.swing.ButtonGroup btnGroupPersona;
     private javax.swing.ButtonGroup btnGroupVigencia;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnModificarCentro;
+    private javax.swing.JButton btnModificarPais;
     private javax.swing.JButton btnModificarPersona;
     private javax.swing.JButton btnModificarRol;
+    private javax.swing.JButton btnPaises;
     private javax.swing.JButton btnPanelCrearUsuario;
-    private javax.swing.JButton btnRol;
     private javax.swing.JButton btnRoles;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVolver;
@@ -1562,13 +1766,16 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverUsuario;
     private javax.swing.JComboBox<String> cbRol;
     private javax.swing.JComboBox<String> cbRutPersona;
-    private javax.swing.JComboBox<String> cbVigencia;
+    private javax.swing.JComboBox<String> cmbEncargado;
+    private javax.swing.JComboBox<String> cmbPaisCentro;
     private com.toedter.calendar.JDateChooser dFechaNacimiento;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1589,15 +1796,25 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1608,19 +1825,18 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBuscarUsuario;
     private javax.swing.JLabel lblContrasena;
-    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblErrorCrearUsuario;
     private javax.swing.JLabel lblErrorVigencia;
-    private javax.swing.JLabel lblSuccess;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel pPanelCentros;
     private javax.swing.JPanel pPanelCrearUsuario;
     private javax.swing.JPanel pPanelLogin;
+    private javax.swing.JPanel pPanelPais;
     private javax.swing.JPanel pPanelPersona;
     private javax.swing.JPanel pPanelRol;
     private javax.swing.JPanel pPanelUsuario;
@@ -1629,8 +1845,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbInactiva;
     private javax.swing.JRadioButton rbtnAlumno;
     private javax.swing.JRadioButton rbtnFamilia;
+    private javax.swing.JTabbedPane tabCentros;
+    private javax.swing.JTabbedPane tabPais;
+    private javax.swing.JTabbedPane tabRoles;
     private javax.swing.JTable tblCentros;
+    private javax.swing.JTable tblPaises;
     private javax.swing.JTable tblPersonas;
+    private javax.swing.JTable tblRoles;
     private javax.swing.JTable tblUsuario;
     private javax.swing.JButton txtAdministrarPersona;
     private javax.swing.JTextField txtApellidoMaterno;
@@ -1639,18 +1860,23 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscarPersona;
     private javax.swing.JTextField txtBuscarUsuario;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtDireccionCentro;
     private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEmailCentro;
     private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtIdVigencia;
     private javax.swing.JTextField txtNacionalidad;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombreRol;
+    private javax.swing.JTextField txtNombreCentro;
     private javax.swing.JTextField txtNuevaPassword;
     private javax.swing.JButton txtNuevaPersona;
     private javax.swing.JTextField txtNuevoUsuario;
+    private javax.swing.JTextField txtPais;
     private javax.swing.JPasswordField txtPass;
+    private javax.swing.JTextField txtRol;
     private javax.swing.JTextField txtRut;
+    private javax.swing.JTextField txtTelefonoCentro;
     private javax.swing.JTextField txtTelefonoFijo;
     private javax.swing.JTextField txtTelefonoMovil;
     private javax.swing.JTextField txtUser;

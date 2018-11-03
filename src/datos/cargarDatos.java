@@ -37,7 +37,7 @@ public class cargarDatos {
         {
             while(rs.next())
             {
-                combo.addItem(rs.getObject(1));
+                combo.addItem(rs.getObject(1)+"-"+rs.getObject(2));
             }
             combo.validate();
             rs.close();
