@@ -27,6 +27,7 @@ import modelo.Cel;
 import modelo.Familia;
 import modelo.Pais;
 import modelo.Persona;
+import modelo.Programa;
 import modelo.Rol;
 import modelo.Usuario;
 
@@ -68,8 +69,11 @@ public class Main extends javax.swing.JFrame {
         pPanelRol.setVisible(false);
         pPanelCentros.setVisible(false);
         pPanelPersona.setVisible(false);
-        pPanelUsuario.setVisible(false);
+        pPanelAdminUsuario.setVisible(false);
         pPanelPais.setVisible(false);
+        pPanelPrograma.setVisible(false);
+        pPanelUsuario.setVisible(false);
+        
 
     }
 
@@ -78,17 +82,20 @@ public class Main extends javax.swing.JFrame {
         pPanelRol.setVisible(false);
         pPanelCentros.setVisible(false);
         pPanelPersona.setVisible(false);
-        pPanelUsuario.setVisible(false);
+        pPanelAdminUsuario.setVisible(false);
         pPanelPais.setVisible(false);
+        pPanelPrograma.setVisible(false);
         jPanel3.setVisible(true);
+        pPanelUsuario.setVisible(false);
     }
 
     private void setVisibleOff() {
         pPanelCrearUsuario.setVisible(false);
         pPanelRol.setVisible(false);
         pPanelCentros.setVisible(false);
-
+        pPanelPrograma.setVisible(false);
         pPanelPersona.setVisible(false);
+        pPanelUsuario.setVisible(false);
     }
 
     public void actualizarTabla() {
@@ -97,7 +104,6 @@ public class Main extends javax.swing.JFrame {
         }
         cnn.MostrarAlumnos(dtm, tblPersonas);
     }
-
     public void actualizarTablaUsuario() {
         while (dtmUsuario.getRowCount() > 0) {
             dtmUsuario.removeRow(0);
@@ -140,12 +146,12 @@ public class Main extends javax.swing.JFrame {
     public void buscarUsuario() {
         String dato = txtBuscarUsuario.getText();
         if (dato.isEmpty()) {
-            actualizarTabla();
+            actualizarTablaUsuario();
         } else {
-            while (dtm.getRowCount() > 0) {
-                dtm.removeRow(0);
+            while (dtmUsuario.getRowCount() > 0) {
+                dtmUsuario.removeRow(0);
             }
-            cnn.BuscarAlumnos(dtm, tblPersonas, dato);
+            cnn.BuscarUsuarios(dtmUsuario, tblUsuario, dato);
         }
     }
 
@@ -192,10 +198,8 @@ public class Main extends javax.swing.JFrame {
         btnAdministrarCentros = new javax.swing.JButton();
         txtAdministrarPersona = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnPanelCrearUsuario = new javax.swing.JButton();
+        btnPrograma = new javax.swing.JButton();
         btnPaises = new javax.swing.JButton();
-        pProgramas = new javax.swing.JPanel();
         pPanelRol = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
@@ -272,31 +276,6 @@ public class Main extends javax.swing.JFrame {
         btnArchivos = new javax.swing.JButton();
         btnEliminarPersona = new javax.swing.JButton();
         btnModificarPersona = new javax.swing.JButton();
-        pPanelUsuario = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblUsuario = new javax.swing.JTable();
-        lblBuscarUsuario = new javax.swing.JLabel();
-        txtBuscarUsuario = new javax.swing.JTextField();
-        btnVolverUsuario = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        rbActiva = new javax.swing.JRadioButton();
-        rbInactiva = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtIdVigencia = new javax.swing.JTextField();
-        btnCambiarVigencia = new javax.swing.JButton();
-        lblErrorVigencia = new javax.swing.JLabel();
-        pPanelCrearUsuario = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        txtNuevoUsuario = new javax.swing.JTextField();
-        txtNuevaPassword = new javax.swing.JTextField();
-        cbRutPersona = new javax.swing.JComboBox<>();
-        cbRol = new javax.swing.JComboBox<>();
-        btnCrearUsuario = new javax.swing.JButton();
-        lblErrorCrearUsuario = new javax.swing.JLabel();
         pPanelPais = new javax.swing.JPanel();
         tabPais = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
@@ -310,6 +289,54 @@ public class Main extends javax.swing.JFrame {
         btnModificarPais = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        pPanelUsuario = new javax.swing.JPanel();
+        tabUsuarios = new javax.swing.JTabbedPane();
+        pPanelCrearUsuario = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtNuevoUsuario = new javax.swing.JTextField();
+        txtNuevaPassword = new javax.swing.JTextField();
+        cbRutPersona = new javax.swing.JComboBox<>();
+        cbRol = new javax.swing.JComboBox<>();
+        btnCrearUsuario = new javax.swing.JButton();
+        lblErrorCrearUsuario = new javax.swing.JLabel();
+        pPanelAdminUsuario = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblUsuario = new javax.swing.JTable();
+        lblBuscarUsuario = new javax.swing.JLabel();
+        txtBuscarUsuario = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        rbActiva = new javax.swing.JRadioButton();
+        rbInactiva = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtCambiarClave = new javax.swing.JTextField();
+        btnCambiarVigencia = new javax.swing.JButton();
+        lblErrorVigencia = new javax.swing.JLabel();
+        btnCambiarClave = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
+        txtIdVigencia = new javax.swing.JTextField();
+        btnVolverUsuario = new javax.swing.JButton();
+        pPanelPrograma = new javax.swing.JPanel();
+        tabPrograma = new javax.swing.JTabbedPane();
+        pPanelCrearPrograma = new javax.swing.JPanel();
+        btnCrearPrograma = new javax.swing.JButton();
+        txtNombreCrearPrograma = new java.awt.TextField();
+        txtDuracionCrearPrograma = new java.awt.TextField();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        cbCelPrograma = new javax.swing.JComboBox<>();
+        lblErrorCrearPrograma = new javax.swing.JLabel();
+        btnVolverCrearPrograma = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        label1 = new java.awt.Label();
+        label2 = new java.awt.Label();
+        cbProgramas = new javax.swing.JComboBox<>();
+        cbCelPublicar = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -410,7 +437,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(pPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -420,7 +447,6 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Centro de Estudios Montreal");
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -442,7 +468,7 @@ public class Main extends javax.swing.JFrame {
                 btnRolesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 375, 137, -1));
+        jPanel2.add(btnRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 137, -1));
 
         btnAdministrarCentros.setText("Administrar Centros");
         btnAdministrarCentros.addActionListener(new java.awt.event.ActionListener() {
@@ -468,16 +494,13 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 96, 140, -1));
 
-        jButton1.setText("Publicar Programa");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 140, -1));
-
-        btnPanelCrearUsuario.setText("Crear Usuario");
-        btnPanelCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnPrograma.setText("Administrar Programa");
+        btnPrograma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPanelCrearUsuarioActionPerformed(evt);
+                btnProgramaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPanelCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 178, 140, -1));
+        jPanel2.add(btnPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 140, -1));
 
         btnPaises.setText("Administrar Paises");
         btnPaises.addActionListener(new java.awt.event.ActionListener() {
@@ -485,34 +508,20 @@ public class Main extends javax.swing.JFrame {
                 btnPaisesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPaises, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 140, -1));
-
-        pProgramas.setBackground(new java.awt.Color(204, 204, 255));
-        pProgramas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout pProgramasLayout = new javax.swing.GroupLayout(pProgramas);
-        pProgramas.setLayout(pProgramasLayout);
-        pProgramasLayout.setHorizontalGroup(
-            pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
-        );
-        pProgramasLayout.setVerticalGroup(
-            pProgramasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanel2.add(btnPaises, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 140, -1));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(472, 472, 472)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -521,9 +530,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel3)
                 .addGap(50, 50, 50)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                    .addComponent(pProgramas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -734,7 +741,7 @@ public class Main extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
-                .addComponent(tabCentros)
+                .addComponent(tabCentros, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -889,115 +896,6 @@ public class Main extends javax.swing.JFrame {
 
         pPanelPersona.add(TabPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
 
-        pPanelUsuario.setMinimumSize(new java.awt.Dimension(800, 600));
-        pPanelUsuario.setPreferredSize(new java.awt.Dimension(800, 600));
-        pPanelUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblUsuarioMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(tblUsuario);
-
-        jPanel9.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 730, 250));
-
-        lblBuscarUsuario.setText("Buscar");
-        jPanel9.add(lblBuscarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        txtBuscarUsuario.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtBuscarUsuarioCaretUpdate(evt);
-            }
-        });
-        jPanel9.add(txtBuscarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 540, -1));
-
-        btnVolverUsuario.setText("Volver");
-        btnVolverUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverUsuarioActionPerformed(evt);
-            }
-        });
-        jPanel9.add(btnVolverUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        pPanelUsuario.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jLabel1.setText("Cambiar Vigencia");
-        pPanelUsuario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
-
-        btnGroupVigencia.add(rbActiva);
-        rbActiva.setSelected(true);
-        rbActiva.setText("Activa");
-        pPanelUsuario.add(rbActiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
-
-        btnGroupVigencia.add(rbInactiva);
-        rbInactiva.setText("Inactiva");
-        pPanelUsuario.add(rbInactiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, -1, -1));
-
-        jLabel2.setText("ID Usuario");
-        pPanelUsuario.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, 20));
-        pPanelUsuario.add(txtIdVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 90, -1));
-
-        btnCambiarVigencia.setText("Cambiar");
-        btnCambiarVigencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCambiarVigenciaActionPerformed(evt);
-            }
-        });
-        pPanelUsuario.add(btnCambiarVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, -1, -1));
-
-        lblErrorVigencia.setForeground(new java.awt.Color(204, 0, 51));
-        lblErrorVigencia.setText("jLabel6");
-        pPanelUsuario.add(lblErrorVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
-
-        pPanelCrearUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        pPanelCrearUsuario.setMaximumSize(new java.awt.Dimension(800, 600));
-        pPanelCrearUsuario.setMinimumSize(new java.awt.Dimension(800, 600));
-        pPanelCrearUsuario.setPreferredSize(new java.awt.Dimension(800, 600));
-        pPanelCrearUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setText("Usuario");
-        pPanelCrearUsuario.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
-
-        jLabel6.setText("Contraseña");
-        pPanelCrearUsuario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
-
-        jLabel7.setText("Rut Persona");
-        pPanelCrearUsuario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
-
-        jLabel8.setText("Rol");
-        pPanelCrearUsuario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
-        pPanelCrearUsuario.add(txtNuevoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 110, -1));
-        pPanelCrearUsuario.add(txtNuevaPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 110, -1));
-
-        cbRutPersona.setMaximumRowCount(999);
-        pPanelCrearUsuario.add(cbRutPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
-
-        cbRol.setMaximumRowCount(10);
-        pPanelCrearUsuario.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
-
-        btnCrearUsuario.setText("Crear Usuario");
-        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearUsuarioActionPerformed(evt);
-            }
-        });
-        pPanelCrearUsuario.add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
-        pPanelCrearUsuario.add(lblErrorCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
-
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblPaises.setModel(new javax.swing.table.DefaultTableModel(
@@ -1107,15 +1005,300 @@ public class Main extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
+        pPanelUsuario.setMaximumSize(new java.awt.Dimension(800, 600));
+        pPanelUsuario.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelUsuario.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        pPanelCrearUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        pPanelCrearUsuario.setMaximumSize(new java.awt.Dimension(800, 550));
+        pPanelCrearUsuario.setMinimumSize(new java.awt.Dimension(800, 550));
+        pPanelCrearUsuario.setPreferredSize(new java.awt.Dimension(800, 550));
+        pPanelCrearUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("Usuario");
+        pPanelCrearUsuario.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+
+        jLabel6.setText("Contraseña");
+        pPanelCrearUsuario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+
+        jLabel7.setText("Rut Persona");
+        pPanelCrearUsuario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
+
+        jLabel8.setText("Rol");
+        pPanelCrearUsuario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+        pPanelCrearUsuario.add(txtNuevoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 110, -1));
+        pPanelCrearUsuario.add(txtNuevaPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 110, -1));
+
+        cbRutPersona.setMaximumRowCount(999);
+        pPanelCrearUsuario.add(cbRutPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
+
+        cbRol.setMaximumRowCount(10);
+        pPanelCrearUsuario.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
+
+        btnCrearUsuario.setText("Crear Usuario");
+        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearUsuarioActionPerformed(evt);
+            }
+        });
+        pPanelCrearUsuario.add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
+        pPanelCrearUsuario.add(lblErrorCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+
+        tabUsuarios.addTab("Crear Usuario", pPanelCrearUsuario);
+
+        pPanelAdminUsuario.setMaximumSize(new java.awt.Dimension(800, 550));
+        pPanelAdminUsuario.setMinimumSize(new java.awt.Dimension(800, 550));
+        pPanelAdminUsuario.setPreferredSize(new java.awt.Dimension(800, 550));
+        pPanelAdminUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuarioMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblUsuario);
+
+        jPanel9.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 730, 200));
+
+        lblBuscarUsuario.setText("Buscar");
+        jPanel9.add(lblBuscarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+
+        txtBuscarUsuario.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtBuscarUsuarioCaretUpdate(evt);
+            }
+        });
+        jPanel9.add(txtBuscarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 540, -1));
+
+        pPanelAdminUsuario.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 280));
+
+        jLabel1.setText("Cambiar Vigencia");
+        pPanelAdminUsuario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, -1, -1));
+
+        btnGroupVigencia.add(rbActiva);
+        rbActiva.setSelected(true);
+        rbActiva.setText("Activa");
+        pPanelAdminUsuario.add(rbActiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, -1, -1));
+
+        btnGroupVigencia.add(rbInactiva);
+        rbInactiva.setText("Inactiva");
+        pPanelAdminUsuario.add(rbInactiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, -1, -1));
+
+        jLabel2.setText("ID Usuario:");
+        pPanelAdminUsuario.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, 20));
+        pPanelAdminUsuario.add(txtCambiarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 120, -1));
+
+        btnCambiarVigencia.setText("Cambiar Vigencia");
+        btnCambiarVigencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarVigenciaActionPerformed(evt);
+            }
+        });
+        pPanelAdminUsuario.add(btnCambiarVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 130, -1));
+
+        lblErrorVigencia.setForeground(new java.awt.Color(204, 0, 51));
+        lblErrorVigencia.setText("jLabel6");
+        pPanelAdminUsuario.add(lblErrorVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 60, 20));
+
+        btnCambiarClave.setText("Cambiar Contraseña");
+        btnCambiarClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarClaveActionPerformed(evt);
+            }
+        });
+        pPanelAdminUsuario.add(btnCambiarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, -1, -1));
+
+        jLabel41.setText("Contraseña:");
+        pPanelAdminUsuario.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
+        pPanelAdminUsuario.add(txtIdVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 120, -1));
+
+        tabUsuarios.addTab("Administrar Usuario", pPanelAdminUsuario);
+
+        btnVolverUsuario.setText("Volver");
+        btnVolverUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverUsuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pPanelUsuarioLayout = new javax.swing.GroupLayout(pPanelUsuario);
+        pPanelUsuario.setLayout(pPanelUsuarioLayout);
+        pPanelUsuarioLayout.setHorizontalGroup(
+            pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabUsuarios, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(pPanelUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVolverUsuario)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pPanelUsuarioLayout.setVerticalGroup(
+            pPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelUsuarioLayout.createSequentialGroup()
+                .addComponent(btnVolverUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pPanelPrograma.setMaximumSize(new java.awt.Dimension(800, 600));
+        pPanelPrograma.setMinimumSize(new java.awt.Dimension(800, 600));
+
+        pPanelCrearPrograma.setMaximumSize(new java.awt.Dimension(800, 600));
+        pPanelCrearPrograma.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelCrearPrograma.setName(""); // NOI18N
+        pPanelCrearPrograma.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        btnCrearPrograma.setText("Crear Programa");
+        btnCrearPrograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearProgramaActionPerformed(evt);
+            }
+        });
+
+        jLabel38.setText("Nombre Programa:");
+
+        jLabel39.setText("Duración Programa (Horas):");
+
+        jLabel40.setText("Centro de Estudios (CEL):");
+
+        lblErrorCrearPrograma.setForeground(new java.awt.Color(255, 51, 51));
+
+        btnVolverCrearPrograma.setText("Volver");
+        btnVolverCrearPrograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverCrearProgramaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pPanelCrearProgramaLayout = new javax.swing.GroupLayout(pPanelCrearPrograma);
+        pPanelCrearPrograma.setLayout(pPanelCrearProgramaLayout);
+        pPanelCrearProgramaLayout.setHorizontalGroup(
+            pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVolverCrearPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
+                        .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel39)
+                            .addComponent(btnCrearPrograma)
+                            .addComponent(jLabel40))
+                        .addGap(57, 57, 57)
+                        .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombreCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDuracionCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblErrorCrearPrograma)
+                            .addComponent(cbCelPrograma, 0, 130, Short.MAX_VALUE))))
+                .addContainerGap(413, Short.MAX_VALUE))
+        );
+        pPanelCrearProgramaLayout.setVerticalGroup(
+            pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(btnVolverCrearPrograma)
+                .addGap(33, 33, 33)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel38))
+                    .addComponent(txtNombreCrearPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDuracionCrearPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel39))
+                .addGap(27, 27, 27)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(cbCelPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCrearPrograma)
+                    .addComponent(lblErrorCrearPrograma))
+                .addContainerGap(335, Short.MAX_VALUE))
+        );
+
+        tabPrograma.addTab("Crear Programa", pPanelCrearPrograma);
+
+        label1.setText("Programa");
+
+        label2.setText("Centro de Estudios Asignado");
+
+        jButton1.setText("Publicar");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbProgramas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbCelPublicar, 0, 162, Short.MAX_VALUE))))
+                .addContainerGap(381, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cbCelPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(66, 66, 66)
+                .addComponent(jButton1)
+                .addContainerGap(333, Short.MAX_VALUE))
+        );
+
+        tabPrograma.addTab("Publicar Programa", jPanel4);
+
+        javax.swing.GroupLayout pPanelProgramaLayout = new javax.swing.GroupLayout(pPanelPrograma);
+        pPanelPrograma.setLayout(pPanelProgramaLayout);
+        pPanelProgramaLayout.setHorizontalGroup(
+            pPanelProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabPrograma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
+        );
+        pPanelProgramaLayout.setVerticalGroup(
+            pPanelProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelProgramaLayout.createSequentialGroup()
+                .addGap(0, 31, Short.MAX_VALUE)
+                .addComponent(tabPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pPanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1123,25 +1306,28 @@ public class Main extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 38, Short.MAX_VALUE)
+                    .addGap(0, 36, Short.MAX_VALUE)
                     .addComponent(pPanelCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 37, Short.MAX_VALUE)))
+                    .addGap(0, 36, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pPanelPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pPanelCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pPanelPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -1167,18 +1353,21 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 6, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pPanelCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 606, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1250,7 +1439,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnVolver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolver1ActionPerformed
-        // TODO add your handling code here:
+        volverMenu();
     }//GEN-LAST:event_btnVolver1ActionPerformed
 
     private void rbtnAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAlumnoActionPerformed
@@ -1377,7 +1566,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNuevaPersonaActionPerformed
 
     private void btnModificarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPersonaActionPerformed
-        // TODO add your handling code here:
+
         if (rbtnAlumno.isSelected() || rbtnFamilia.isSelected()) {
             String rut = txtRut.getText();
             String nombre = txtNombre.getText();
@@ -1426,13 +1615,10 @@ public class Main extends javax.swing.JFrame {
         dtmUsuario.setRowCount(0);
     }
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        jPanel3.setVisible(false);
-        pPanelUsuario.setVisible(true);
-        lblErrorVigencia.setVisible(false);
         dtmUsuario = new DefaultTableModel() {
-            public boolean isCellEditable(int fila, int columna) {
-                return false;
-            }
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
         };
         tblUsuario.setModel(dtmUsuario);
         dtmUsuario.addColumn("ID Usuario");
@@ -1442,6 +1628,13 @@ public class Main extends javax.swing.JFrame {
         dtmUsuario.addColumn("Vigencia");
         cnn.MostrarUsuario(dtmUsuario, tblUsuario);
         tblUsuario.getTableHeader().setReorderingAllowed(false);
+        jPanel3.setVisible(false);
+        pPanelUsuario.setVisible(true);
+        lblErrorVigencia.setVisible(false);
+        lblErrorCrearUsuario.setVisible(false);
+        cnn.comboBoxPersona(cbRutPersona);
+        cnn.comboBoxRol(cbRol);
+
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
@@ -1449,7 +1642,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void txtBuscarUsuarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioCaretUpdate
-        // TODO add your handling code here:
+        buscarUsuario();
     }//GEN-LAST:event_txtBuscarUsuarioCaretUpdate
 
     private void txtBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarPersonaActionPerformed
@@ -1463,37 +1656,50 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCambiarVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarVigenciaActionPerformed
         int cuentaActiva = 0;
+        Usuario user = null;
         lblErrorVigencia.setVisible(false);
         if (rbActiva.isSelected()) {
             cuentaActiva = 1;
         } else {
             cuentaActiva = 0;
         }
-
-        int id = Integer.parseInt(txtIdVigencia.getText());
-        Usuario user = null;
-        try {
-            user = cnn.selectUsuario(id);
-        } catch (SQLException ex) {
-            lblErrorVigencia.setText("Error SQL: " + ex.getMessage());
-            lblErrorVigencia.setVisible(true);
-
+        if (txtIdVigencia.getText().equals("")) {
+            lblErrorVigencia.setText("Debe ingresar un ID de usuario");
         }
-        if (user != null) {
-            lblErrorVigencia.setVisible(false);
-            user.setVigencia(cuentaActiva);
-            int res = cnn.insertUpdateUsuario(user, "set");
-            if (res > 0) {
-                limpiarTablaUsuario();
-                actualizarTablaUsuario();
-                JOptionPane.showMessageDialog(null, "Se ha actualizado la vigencia correctamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la vigencia");
+        else
+        {
+            try
+            {
+                int id = Integer.parseInt(txtIdVigencia.getText());
+               
+                try {
+                    user = cnn.selectUsuario(id);
+                } catch (SQLException ex) {
+                    lblErrorVigencia.setText("Error SQL: " + ex.getMessage());
+                    lblErrorVigencia.setVisible(true);
+
+                }
+
+                lblErrorVigencia.setVisible(false);
+                user.setVigencia(cuentaActiva);
+                int res = cnn.insertUpdateUsuario(user, "set");
+                if (res > 0) {
+                    limpiarTablaUsuario();
+                    actualizarTablaUsuario();
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado la vigencia correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la vigencia");
+                    
+                }
+
             }
-        } else {
-            lblErrorVigencia.setText("Error al cambiar Usuario");
-            lblErrorVigencia.setVisible(true);
+            catch (Exception ex)
+            {
+                lblErrorVigencia.setText("ID de usuario debe ser un número");
+            }
         }
+        
+        
 
 
     }//GEN-LAST:event_btnCambiarVigenciaActionPerformed
@@ -1532,14 +1738,6 @@ public class Main extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtPassKeyPressed
-
-    private void btnPanelCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelCrearUsuarioActionPerformed
-        jPanel3.setVisible(false);
-        pPanelCrearUsuario.setVisible(true);
-        lblErrorCrearUsuario.setVisible(false);
-        cnn.comboBoxPersona(cbRutPersona);
-        cnn.comboBoxRol(cbRol);
-    }//GEN-LAST:event_btnPanelCrearUsuarioActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
         String nombreUsuario = String.valueOf(cbRutPersona.getSelectedItem());
@@ -1704,6 +1902,96 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarCentroActionPerformed
 
+    private void btnProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgramaActionPerformed
+        jPanel3.setVisible(false);
+        pPanelPrograma.setVisible(true);
+        cnn.comboBoxCel(cbCelPrograma); 
+        cnn.comboBoxPrograma(cbProgramas);
+        cnn.comboBoxCel(cbCelPublicar);
+    }//GEN-LAST:event_btnProgramaActionPerformed
+
+    private void btnCrearProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProgramaActionPerformed
+        if (txtNombreCrearPrograma.getText().equals("")) {
+            lblErrorCrearPrograma.setText("Ingrese un nombre para el Programa");
+        }
+        else
+        {
+            if (txtNombreCrearPrograma.getText().length() > 2) {
+                if (txtDuracionCrearPrograma.getText().equals("")) 
+                {
+                lblErrorCrearPrograma.setText("Ingrese una duración para el Programa");
+                }                
+                else
+                {
+                   try
+                   {
+                       int duracionPrograma = Integer.parseInt(txtDuracionCrearPrograma.getText());
+                       if (duracionPrograma > 0) {
+                            String nombreCel = String.valueOf(cbCelPrograma.getSelectedItem());
+                            String[] separarCel = nombreCel.split("-");
+                            int idCel = Integer.parseInt(separarCel[0]);
+
+                            int idPrograma = 0;
+                            Programa programa = new Programa(idPrograma, txtNombreCrearPrograma.getText(),duracionPrograma , idCel);
+                            if (cnn.insertUpdatePrograma(programa, "do") == 1) {
+                                lblErrorCrearPrograma.setText("Agregado Correctamente");
+                                lblErrorCrearPrograma.setVisible(true);
+                            } else {
+                                lblErrorCrearPrograma.setText("No se pudo agregar programa");
+                                lblErrorCrearPrograma.setVisible(true);
+                            }
+                        }
+                       else
+                       {
+                           lblErrorCrearPrograma.setText("La duración del programa debe ser mayor a 0");
+                       }
+                   }
+                   catch(Exception ex)
+                   {
+                      lblErrorCrearPrograma.setText("Ingrese un número valido para la duración del programa"); 
+                   }
+                }          
+            }
+            else
+            {
+                lblErrorCrearPrograma.setText("El nombre del programa debe tener largo mayor a 2");
+            }
+        }
+        
+    }//GEN-LAST:event_btnCrearProgramaActionPerformed
+
+    private void btnVolverCrearProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverCrearProgramaActionPerformed
+        volverMenu();
+    }//GEN-LAST:event_btnVolverCrearProgramaActionPerformed
+
+    private void btnCambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarClaveActionPerformed
+ 
+        int id = Integer.parseInt(txtIdVigencia.getText());
+        Usuario user = null;
+        try {
+            user = cnn.selectUsuario(id);
+        } catch (SQLException ex) {
+            lblErrorVigencia.setText("Error SQL: " + ex.getMessage());
+            lblErrorVigencia.setVisible(true);
+        }
+        
+        if (user != null) {
+            lblErrorVigencia.setVisible(false);
+            user.setContrasena(txtCambiarClave.getText());
+            int res = cnn.insertUpdateUsuario(user, "set");
+            if (res > 0) {
+                limpiarTablaUsuario();
+                actualizarTablaUsuario();
+                JOptionPane.showMessageDialog(null, "Contraseña actualizada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar la Contraseña");
+            }
+        } else {
+            lblErrorVigencia.setText("ID no existente");
+            lblErrorVigencia.setVisible(true);
+        }
+    }//GEN-LAST:event_btnCambiarClaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1743,9 +2031,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TabPersona;
     private javax.swing.JButton btnAdministrarCentros;
     private javax.swing.JButton btnArchivos;
+    private javax.swing.JButton btnCambiarClave;
     private javax.swing.JButton btnCambiarVigencia;
     private javax.swing.JButton btnCrearCentro;
     private javax.swing.JButton btnCrearPais;
+    private javax.swing.JButton btnCrearPrograma;
     private javax.swing.JButton btnCrearRol;
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnEliminarPersona;
@@ -1757,13 +2047,17 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarPersona;
     private javax.swing.JButton btnModificarRol;
     private javax.swing.JButton btnPaises;
-    private javax.swing.JButton btnPanelCrearUsuario;
+    private javax.swing.JButton btnPrograma;
     private javax.swing.JButton btnRoles;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton btnVolver1;
+    private javax.swing.JButton btnVolverCrearPrograma;
     private javax.swing.JButton btnVolverMenuPersona;
     private javax.swing.JButton btnVolverUsuario;
+    private javax.swing.JComboBox<String> cbCelPrograma;
+    private javax.swing.JComboBox<String> cbCelPublicar;
+    private javax.swing.JComboBox<String> cbProgramas;
     private javax.swing.JComboBox<String> cbRol;
     private javax.swing.JComboBox<String> cbRutPersona;
     private javax.swing.JComboBox<String> cmbEncargado;
@@ -1803,7 +2097,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1815,6 +2113,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1828,26 +2127,33 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
     private javax.swing.JLabel lblBuscarUsuario;
     private javax.swing.JLabel lblContrasena;
+    private javax.swing.JLabel lblErrorCrearPrograma;
     private javax.swing.JLabel lblErrorCrearUsuario;
     private javax.swing.JLabel lblErrorVigencia;
     private javax.swing.JLabel lblUsuario;
+    private javax.swing.JPanel pPanelAdminUsuario;
     private javax.swing.JPanel pPanelCentros;
+    private javax.swing.JPanel pPanelCrearPrograma;
     private javax.swing.JPanel pPanelCrearUsuario;
     private javax.swing.JPanel pPanelLogin;
     private javax.swing.JPanel pPanelPais;
     private javax.swing.JPanel pPanelPersona;
+    private javax.swing.JPanel pPanelPrograma;
     private javax.swing.JPanel pPanelRol;
     private javax.swing.JPanel pPanelUsuario;
-    private javax.swing.JPanel pProgramas;
     private javax.swing.JRadioButton rbActiva;
     private javax.swing.JRadioButton rbInactiva;
     private javax.swing.JRadioButton rbtnAlumno;
     private javax.swing.JRadioButton rbtnFamilia;
     private javax.swing.JTabbedPane tabCentros;
     private javax.swing.JTabbedPane tabPais;
+    private javax.swing.JTabbedPane tabPrograma;
     private javax.swing.JTabbedPane tabRoles;
+    private javax.swing.JTabbedPane tabUsuarios;
     private javax.swing.JTable tblCentros;
     private javax.swing.JTable tblPaises;
     private javax.swing.JTable tblPersonas;
@@ -1859,8 +2165,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscarCentro;
     private javax.swing.JTextField txtBuscarPersona;
     private javax.swing.JTextField txtBuscarUsuario;
+    private javax.swing.JTextField txtCambiarClave;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDireccionCentro;
+    private java.awt.TextField txtDuracionCrearPrograma;
     private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEmailCentro;
@@ -1869,6 +2177,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtNacionalidad;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreCentro;
+    private java.awt.TextField txtNombreCrearPrograma;
     private javax.swing.JTextField txtNuevaPassword;
     private javax.swing.JButton txtNuevaPersona;
     private javax.swing.JTextField txtNuevoUsuario;

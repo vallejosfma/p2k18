@@ -35,6 +35,11 @@ public class Usuario {
         this.id_rol = id_rol;       
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "id_usuario=" + id_usuario + ", usuario=" + usuario + ", password=" + password + ", persona_rut=" + persona_rut + ", id_rol=" + id_rol + ", vigencia=" + vigencia + '}';
+    }
+
     public String getPersona_rut() {
         return persona_rut;
     }

@@ -139,6 +139,30 @@ public class Conexion {
         }
     }
     
+    public void comboBoxCel(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_CEL, NOMBRE_CEL FROM CEL");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    
+    public void comboBoxPrograma(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_PRO,NOMBRE_PROGRAMA FROM PROGRAMA_ESTUDIO");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+    }
+    
     public void comboBoxPais(JComboBox combo){
         
         try{
@@ -210,6 +234,18 @@ public class Conexion {
         
         try{
             PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,NOMBRE,APELLIDO_PATERNO,APELLIDO_MATERNO,FECHA_NACIMIENTO FROM PERSONA WHERE (NOMBRE LIKE '%"+dato+"%' OR APELLIDO_PATERNO LIKE '%"+dato+"%') ORDER BY RUT");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarTabla(5, resultado, model, tabla);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta"+ex);
+           
+        }
+       
+    }
+     public void BuscarUsuarios(DefaultTableModel model,JTable tabla,String dato){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_USUARIO,USUARIO,PERSONA_RUT,ROL_ID_ROL,VIGENCIA FROM  USUARIO WHERE (ID_USUARIO LIKE '%"+dato+"%' OR PERSONA_RUT LIKE '%"+dato+"%' OR USUARIO LIKE '%"+dato+"%') ORDER BY ID_USUARIO");
             ResultSet resultado = sentencia.executeQuery();
             c.cargarTabla(5, resultado, model, tabla);
         }catch(Exception ex){
@@ -527,7 +563,7 @@ public class Conexion {
         try {
             CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PROGRAMA_ESTUDIO (?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
-            cst.setInt("p_ID_PROGRAMA", programa.getId_programa());
+            cst.setInt("p_ID_PRO", programa.getId_programa());
             cst.setString("p_NOMBRE_PROGRAMA", programa.getNombre_programa());
             cst.setInt("p_DURACION_PROGRAMA", programa.getDuracion_programa());
             cst.setInt("p_CEL_ID_CEL", programa.getId_cel());
@@ -563,14 +599,14 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_USUARIO (?,?,?,?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_USUARIO (?,?,?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
+            cst.setInt("p_ID_USUARIO", usuario.getId_usuario());
             cst.setString("p_USUARIO", usuario.getUsuario());
             cst.setString("p_PASSWORD", usuario.getContrasena());
             cst.setString("p_PERSONA_RUT", usuario.getPersona_rut());
-            cst.setInt("p_ROL_ID_ROL", usuario.getId_rol());            
-            
-            
+            cst.setInt("p_ROL_ID_ROL", usuario.getId_rol());  
+            cst.setInt("p_VIGENCIA", usuario.getVigencia());
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
