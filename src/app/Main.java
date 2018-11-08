@@ -5,7 +5,9 @@
  */
 package app;
 
+import correo.Correo;
 import datos.Conexion;
+import datos.ControladorCorreo;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -17,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,6 +30,7 @@ import modelo.Cel;
 import modelo.Familia;
 import modelo.Pais;
 import modelo.Persona;
+import modelo.Postulacion;
 import modelo.Programa;
 import modelo.Rol;
 import modelo.Usuario;
@@ -50,6 +54,7 @@ public class Main extends javax.swing.JFrame {
     Conexion cnn = null;
     FileInputStream fis;
     DefaultTableModel dtm, dtmUsuario, dtmRol, dtmPais, dtmCentros;
+    Correo c = new Correo();
 
     public Main() {
         initComponents();
@@ -73,7 +78,8 @@ public class Main extends javax.swing.JFrame {
         pPanelPais.setVisible(false);
         pPanelPrograma.setVisible(false);
         pPanelUsuario.setVisible(false);
-        
+        pPanelPostulacion.setVisible(false);
+
 
     }
 
@@ -87,6 +93,8 @@ public class Main extends javax.swing.JFrame {
         pPanelPrograma.setVisible(false);
         jPanel3.setVisible(true);
         pPanelUsuario.setVisible(false);
+        pPanelPostulacion.setVisible(false);
+
     }
 
     private void setVisibleOff() {
@@ -96,6 +104,7 @@ public class Main extends javax.swing.JFrame {
         pPanelPrograma.setVisible(false);
         pPanelPersona.setVisible(false);
         pPanelUsuario.setVisible(false);
+        pPanelPostulacion.setVisible(false);
     }
 
     public void actualizarTabla() {
@@ -191,8 +200,6 @@ public class Main extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         btnRoles = new javax.swing.JButton();
         btnAdministrarCentros = new javax.swing.JButton();
@@ -200,6 +207,7 @@ public class Main extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnPrograma = new javax.swing.JButton();
         btnPaises = new javax.swing.JButton();
+        btnPostulaciones = new javax.swing.JButton();
         pPanelRol = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
@@ -276,6 +284,16 @@ public class Main extends javax.swing.JFrame {
         btnArchivos = new javax.swing.JButton();
         btnEliminarPersona = new javax.swing.JButton();
         btnModificarPersona = new javax.swing.JButton();
+        pPanelAsignarFamilia = new javax.swing.JPanel();
+        btnAsignarFamilia = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        cbAlumnoAsignar = new javax.swing.JComboBox<>();
+        cbFamiliaAsignar = new javax.swing.JComboBox<>();
+        jLabel46 = new javax.swing.JLabel();
+        lblFamiliaActual = new javax.swing.JLabel();
+        lblErrorAsignar = new javax.swing.JLabel();
+        btnVolverPersona = new javax.swing.JButton();
         pPanelPais = new javax.swing.JPanel();
         tabPais = new javax.swing.JTabbedPane();
         jPanel11 = new javax.swing.JPanel();
@@ -312,11 +330,9 @@ public class Main extends javax.swing.JFrame {
         rbActiva = new javax.swing.JRadioButton();
         rbInactiva = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
-        txtCambiarClave = new javax.swing.JTextField();
         btnCambiarVigencia = new javax.swing.JButton();
         lblErrorVigencia = new javax.swing.JLabel();
         btnCambiarClave = new javax.swing.JButton();
-        jLabel41 = new javax.swing.JLabel();
         txtIdVigencia = new javax.swing.JTextField();
         btnVolverUsuario = new javax.swing.JButton();
         pPanelPrograma = new javax.swing.JPanel();
@@ -330,13 +346,25 @@ public class Main extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         cbCelPrograma = new javax.swing.JComboBox<>();
         lblErrorCrearPrograma = new javax.swing.JLabel();
-        btnVolverCrearPrograma = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        pPanelAsignar = new javax.swing.JPanel();
         label1 = new java.awt.Label();
         label2 = new java.awt.Label();
         cbProgramas = new javax.swing.JComboBox<>();
         cbCelPublicar = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnAsignar = new javax.swing.JButton();
+        lblErrorPublicar = new java.awt.Label();
+        btnPublicar = new javax.swing.JButton();
+        jLabel45 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
+        btnVolverPrograma = new javax.swing.JButton();
+        pPanelPostulacion = new javax.swing.JPanel();
+        jLabel42 = new javax.swing.JLabel();
+        cbAlumnoPost = new javax.swing.JComboBox<>();
+        jLabel43 = new javax.swing.JLabel();
+        cbProgramaPost = new javax.swing.JComboBox<>();
+        jLabel44 = new javax.swing.JLabel();
+        btnPostular = new javax.swing.JButton();
+        btnVolverPost = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -448,15 +476,9 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setText("Centro de Estudios Montreal");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setMinimumSize(new java.awt.Dimension(800, 600));
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setText("Administrar Postulaciones");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 276, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel10.setText("Administrar Programas");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 309, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Generar Certificados");
@@ -468,7 +490,7 @@ public class Main extends javax.swing.JFrame {
                 btnRolesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 137, -1));
+        jPanel2.add(btnRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 220, -1));
 
         btnAdministrarCentros.setText("Administrar Centros");
         btnAdministrarCentros.addActionListener(new java.awt.event.ActionListener() {
@@ -476,7 +498,7 @@ public class Main extends javax.swing.JFrame {
                 btnAdministrarCentrosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnAdministrarCentros, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 59, 140, -1));
+        jPanel2.add(btnAdministrarCentros, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 59, 220, -1));
 
         txtAdministrarPersona.setText("Administrar Persona");
         txtAdministrarPersona.addActionListener(new java.awt.event.ActionListener() {
@@ -484,7 +506,7 @@ public class Main extends javax.swing.JFrame {
                 txtAdministrarPersonaActionPerformed(evt);
             }
         });
-        jPanel2.add(txtAdministrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 137, 140, -1));
+        jPanel2.add(txtAdministrarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 137, 220, -1));
 
         btnUsuarios.setText("Administrar Usuarios");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -492,7 +514,7 @@ public class Main extends javax.swing.JFrame {
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 96, 140, -1));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 96, 220, -1));
 
         btnPrograma.setText("Administrar Programa");
         btnPrograma.addActionListener(new java.awt.event.ActionListener() {
@@ -500,7 +522,7 @@ public class Main extends javax.swing.JFrame {
                 btnProgramaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 140, -1));
+        jPanel2.add(btnPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 220, -1));
 
         btnPaises.setText("Administrar Paises");
         btnPaises.addActionListener(new java.awt.event.ActionListener() {
@@ -508,7 +530,15 @@ public class Main extends javax.swing.JFrame {
                 btnPaisesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPaises, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 140, -1));
+        jPanel2.add(btnPaises, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 220, -1));
+
+        btnPostulaciones.setText("Administrar Postulaciones");
+        btnPostulaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostulacionesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnPostulaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 220, -1));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -745,6 +775,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        pPanelPersona.setMaximumSize(new java.awt.Dimension(800, 600));
         pPanelPersona.setMinimumSize(new java.awt.Dimension(800, 600));
         pPanelPersona.setPreferredSize(new java.awt.Dimension(800, 600));
         pPanelPersona.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -894,7 +925,90 @@ public class Main extends javax.swing.JFrame {
 
         TabPersona.addTab("Crear Persona", jPanel7);
 
-        pPanelPersona.add(TabPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
+        pPanelAsignarFamilia.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelAsignarFamilia.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        btnAsignarFamilia.setText("Asignar");
+        btnAsignarFamilia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarFamiliaActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Alumno:");
+
+        jLabel10.setText("Familia:");
+
+        cbAlumnoAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAlumnoAsignarActionPerformed(evt);
+            }
+        });
+
+        jLabel46.setText("Familia Actual:");
+
+        lblErrorAsignar.setForeground(new java.awt.Color(255, 0, 0));
+
+        javax.swing.GroupLayout pPanelAsignarFamiliaLayout = new javax.swing.GroupLayout(pPanelAsignarFamilia);
+        pPanelAsignarFamilia.setLayout(pPanelAsignarFamiliaLayout);
+        pPanelAsignarFamiliaLayout.setHorizontalGroup(
+            pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelAsignarFamiliaLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAsignarFamilia)
+                    .addGroup(pPanelAsignarFamiliaLayout.createSequentialGroup()
+                        .addComponent(jLabel46)
+                        .addGap(180, 180, 180)
+                        .addComponent(lblFamiliaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPanelAsignarFamiliaLayout.createSequentialGroup()
+                        .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9))
+                        .addGap(181, 181, 181)
+                        .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbAlumnoAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbFamiliaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(335, Short.MAX_VALUE))
+        );
+        pPanelAsignarFamiliaLayout.setVerticalGroup(
+            pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelAsignarFamiliaLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cbAlumnoAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel46)
+                    .addComponent(lblFamiliaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(pPanelAsignarFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cbFamiliaAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(btnAsignarFamilia)
+                .addGap(18, 18, 18)
+                .addComponent(lblErrorAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(330, Short.MAX_VALUE))
+        );
+
+        TabPersona.addTab("Asignar Familia", pPanelAsignarFamilia);
+
+        pPanelPersona.add(TabPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 790, 560));
+
+        btnVolverPersona.setText("Volver");
+        btnVolverPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverPersonaActionPerformed(evt);
+            }
+        });
+        pPanelPersona.add(btnVolverPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
+        pPanelPais.setMaximumSize(new java.awt.Dimension(800, 600));
+        pPanelPais.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelPais.setPreferredSize(new java.awt.Dimension(800, 600));
 
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -991,12 +1105,12 @@ public class Main extends javax.swing.JFrame {
                         .addGap(206, 206, 206)
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tabPais, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         pPanelPaisLayout.setVerticalGroup(
             pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelPaisLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(61, Short.MAX_VALUE)
                 .addGroup(pPanelPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1041,7 +1155,7 @@ public class Main extends javax.swing.JFrame {
                 btnCrearUsuarioActionPerformed(evt);
             }
         });
-        pPanelCrearUsuario.add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
+        pPanelCrearUsuario.add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
         pPanelCrearUsuario.add(lblErrorCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
         tabUsuarios.addTab("Crear Usuario", pPanelCrearUsuario);
@@ -1099,7 +1213,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setText("ID Usuario:");
         pPanelAdminUsuario.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, 20));
-        pPanelAdminUsuario.add(txtCambiarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 120, -1));
 
         btnCambiarVigencia.setText("Cambiar Vigencia");
         btnCambiarVigencia.addActionListener(new java.awt.event.ActionListener() {
@@ -1107,22 +1220,19 @@ public class Main extends javax.swing.JFrame {
                 btnCambiarVigenciaActionPerformed(evt);
             }
         });
-        pPanelAdminUsuario.add(btnCambiarVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 130, -1));
+        pPanelAdminUsuario.add(btnCambiarVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, 130, -1));
 
         lblErrorVigencia.setForeground(new java.awt.Color(204, 0, 51));
         lblErrorVigencia.setText("jLabel6");
         pPanelAdminUsuario.add(lblErrorVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 60, 20));
 
-        btnCambiarClave.setText("Cambiar Contraseña");
+        btnCambiarClave.setText("Resetear Contraseña");
         btnCambiarClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCambiarClaveActionPerformed(evt);
             }
         });
-        pPanelAdminUsuario.add(btnCambiarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, -1, -1));
-
-        jLabel41.setText("Contraseña:");
-        pPanelAdminUsuario.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
+        pPanelAdminUsuario.add(btnCambiarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, -1, -1));
         pPanelAdminUsuario.add(txtIdVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 120, -1));
 
         tabUsuarios.addTab("Administrar Usuario", pPanelAdminUsuario);
@@ -1154,6 +1264,7 @@ public class Main extends javax.swing.JFrame {
 
         pPanelPrograma.setMaximumSize(new java.awt.Dimension(800, 600));
         pPanelPrograma.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelPrograma.setPreferredSize(new java.awt.Dimension(800, 600));
 
         pPanelCrearPrograma.setMaximumSize(new java.awt.Dimension(800, 600));
         pPanelCrearPrograma.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -1175,13 +1286,6 @@ public class Main extends javax.swing.JFrame {
 
         lblErrorCrearPrograma.setForeground(new java.awt.Color(255, 51, 51));
 
-        btnVolverCrearPrograma.setText("Volver");
-        btnVolverCrearPrograma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverCrearProgramaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pPanelCrearProgramaLayout = new javax.swing.GroupLayout(pPanelCrearPrograma);
         pPanelCrearPrograma.setLayout(pPanelCrearProgramaLayout);
         pPanelCrearProgramaLayout.setHorizontalGroup(
@@ -1189,27 +1293,22 @@ public class Main extends javax.swing.JFrame {
             .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVolverCrearPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
-                        .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel39)
-                            .addComponent(btnCrearPrograma)
-                            .addComponent(jLabel40))
-                        .addGap(57, 57, 57)
-                        .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDuracionCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblErrorCrearPrograma)
-                            .addComponent(cbCelPrograma, 0, 130, Short.MAX_VALUE))))
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39)
+                    .addComponent(btnCrearPrograma)
+                    .addComponent(jLabel40))
+                .addGap(57, 57, 57)
+                .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombreCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDuracionCrearPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblErrorCrearPrograma)
+                    .addComponent(cbCelPrograma, 0, 130, Short.MAX_VALUE))
                 .addContainerGap(413, Short.MAX_VALUE))
         );
         pPanelCrearProgramaLayout.setVerticalGroup(
             pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(btnVolverCrearPrograma)
-                .addGap(33, 33, 33)
+                .addGap(91, 91, 91)
                 .addGroup(pPanelCrearProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pPanelCrearProgramaLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -1236,58 +1335,169 @@ public class Main extends javax.swing.JFrame {
 
         label2.setText("Centro de Estudios Asignado");
 
-        jButton1.setText("Publicar");
+        cbProgramas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProgramasActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        btnAsignar.setText("Asignar");
+        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarActionPerformed(evt);
+            }
+        });
+
+        lblErrorPublicar.setForeground(new java.awt.Color(255, 51, 51));
+
+        btnPublicar.setText("Publicar");
+        btnPublicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublicarActionPerformed(evt);
+            }
+        });
+
+        jLabel45.setText("Estado:");
+
+        javax.swing.GroupLayout pPanelAsignarLayout = new javax.swing.GroupLayout(pPanelAsignar);
+        pPanelAsignar.setLayout(pPanelAsignarLayout);
+        pPanelAsignarLayout.setHorizontalGroup(
+            pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelAsignarLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pPanelAsignarLayout.createSequentialGroup()
+                        .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPublicar))
                         .addGap(65, 65, 65)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbProgramas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbCelPublicar, 0, 162, Short.MAX_VALUE))))
-                .addContainerGap(381, Short.MAX_VALUE))
+                        .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbCelPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAsignar)
+                            .addGroup(pPanelAsignarLayout.createSequentialGroup()
+                                .addComponent(cbProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(jLabel45)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        pPanelAsignarLayout.setVerticalGroup(
+            pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelAsignarLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cbCelPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(66, 66, 66)
-                .addComponent(jButton1)
-                .addContainerGap(333, Short.MAX_VALUE))
+                    .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbProgramas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel45)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38)
+                .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCelPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(pPanelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAsignar)
+                    .addComponent(btnPublicar))
+                .addGap(24, 24, 24)
+                .addComponent(lblErrorPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(292, Short.MAX_VALUE))
         );
 
-        tabPrograma.addTab("Publicar Programa", jPanel4);
+        tabPrograma.addTab("Publicar/Asignar", pPanelAsignar);
+
+        btnVolverPrograma.setText("Volver");
+        btnVolverPrograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverProgramaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pPanelProgramaLayout = new javax.swing.GroupLayout(pPanelPrograma);
         pPanelPrograma.setLayout(pPanelProgramaLayout);
         pPanelProgramaLayout.setHorizontalGroup(
             pPanelProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tabPrograma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(pPanelProgramaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVolverPrograma)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pPanelProgramaLayout.setVerticalGroup(
             pPanelProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPanelProgramaLayout.createSequentialGroup()
-                .addGap(0, 31, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btnVolverPrograma)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tabPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pPanelPostulacion.setMaximumSize(new java.awt.Dimension(800, 600));
+        pPanelPostulacion.setMinimumSize(new java.awt.Dimension(800, 600));
+        pPanelPostulacion.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        jLabel42.setText("Alumno");
+
+        jLabel43.setText("Programa de Estudio");
+
+        jLabel44.setForeground(new java.awt.Color(255, 51, 51));
+
+        btnPostular.setText("Generar Postulación");
+        btnPostular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostularActionPerformed(evt);
+            }
+        });
+
+        btnVolverPost.setText("Volver");
+        btnVolverPost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverPostActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pPanelPostulacionLayout = new javax.swing.GroupLayout(pPanelPostulacion);
+        pPanelPostulacion.setLayout(pPanelPostulacionLayout);
+        pPanelPostulacionLayout.setHorizontalGroup(
+            pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelPostulacionLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVolverPost)
+                    .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnPostular)
+                        .addGroup(pPanelPostulacionLayout.createSequentialGroup()
+                            .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel42)
+                                .addComponent(jLabel43))
+                            .addGap(64, 64, 64)
+                            .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbAlumnoPost, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbProgramaPost, 0, 215, Short.MAX_VALUE)))
+                        .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(402, Short.MAX_VALUE))
+        );
+        pPanelPostulacionLayout.setVerticalGroup(
+            pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPanelPostulacionLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btnVolverPost)
+                .addGap(30, 30, 30)
+                .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(cbAlumnoPost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(pPanelPostulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(cbProgramaPost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addComponent(jLabel44)
+                .addGap(35, 35, 35)
+                .addComponent(btnPostular)
+                .addContainerGap(342, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1329,6 +1539,11 @@ public class Main extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPostulacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1368,6 +1583,11 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(pPanelPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pPanelPostulacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1417,6 +1637,8 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel3.setVisible(false);
         pPanelCentros.setVisible(true);
+        resetearComboBox(cmbPaisCentro);
+        resetearComboBox(cmbEncargado);
         cnn.comboBoxPais(cmbPaisCentro);
         cnn.comboBoxEncargadoCel(cmbEncargado);
         dtmCentros = new DefaultTableModel() {
@@ -1467,6 +1689,10 @@ public class Main extends javax.swing.JFrame {
         dtm.addColumn("Tipo Persona");
         cnn.MostrarAlumnos(dtm, tblPersonas);
         tblPersonas.getTableHeader().setReorderingAllowed(false);
+        resetearComboBox(cbAlumnoAsignar);
+        resetearComboBox(cbFamiliaAsignar);
+        cnn.comboBoxAlumno(cbAlumnoAsignar);
+        cnn.comboBoxFamilia(cbFamiliaAsignar);
     }//GEN-LAST:event_txtAdministrarPersonaActionPerformed
 
     private void rbtnFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnFamiliaActionPerformed
@@ -1632,13 +1858,33 @@ public class Main extends javax.swing.JFrame {
         pPanelUsuario.setVisible(true);
         lblErrorVigencia.setVisible(false);
         lblErrorCrearUsuario.setVisible(false);
+        resetearComboBox(cbRutPersona);
+        resetearComboBox(cbRol);
         cnn.comboBoxPersona(cbRutPersona);
         cnn.comboBoxRol(cbRol);
 
     }//GEN-LAST:event_btnUsuariosActionPerformed
-
+    private void limpiarCamposUsuario()
+    {
+        txtIdVigencia.setText("");    
+    }
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            limpiarCamposUsuario();
+            int fila = tblUsuario.getSelectedRow();
+            String rut = tblUsuario.getValueAt(fila, 0).toString();
+            System.out.println(rut);
+            Object[] datos = cnn.traerUsuario(rut);
+            txtIdVigencia.setText(datos[0].toString());         
+            String vigencia = datos[1].toString();
+            if (vigencia.equals("0")) {
+                rbInactiva.setSelected(true);
+            }
+            else
+            {
+                rbActiva.setSelected(true);
+            }
+        }
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void txtBuscarUsuarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioCaretUpdate
@@ -1901,10 +2147,18 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hubo un problema al modificar el centro de estudio");
         }
     }//GEN-LAST:event_btnModificarCentroActionPerformed
-
+    private void resetearComboBox(javax.swing.JComboBox combo)
+    {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        
+        combo.setModel(modelo);
+    }
     private void btnProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgramaActionPerformed
         jPanel3.setVisible(false);
         pPanelPrograma.setVisible(true);
+        resetearComboBox(cbCelPrograma);
+        resetearComboBox(cbProgramas);
+        resetearComboBox(cbCelPublicar);
         cnn.comboBoxCel(cbCelPrograma); 
         cnn.comboBoxPrograma(cbProgramas);
         cnn.comboBoxCel(cbCelPublicar);
@@ -1930,12 +2184,14 @@ public class Main extends javax.swing.JFrame {
                             String nombreCel = String.valueOf(cbCelPrograma.getSelectedItem());
                             String[] separarCel = nombreCel.split("-");
                             int idCel = Integer.parseInt(separarCel[0]);
-
                             int idPrograma = 0;
-                            Programa programa = new Programa(idPrograma, txtNombreCrearPrograma.getText(),duracionPrograma , idCel);
+                            Programa programa = new Programa(idPrograma, txtNombreCrearPrograma.getText(),duracionPrograma , idCel,0);
                             if (cnn.insertUpdatePrograma(programa, "do") == 1) {
                                 lblErrorCrearPrograma.setText("Agregado Correctamente");
                                 lblErrorCrearPrograma.setVisible(true);
+                                resetearComboBox(cbProgramas);
+                                cnn.comboBoxPrograma(cbProgramas);
+
                             } else {
                                 lblErrorCrearPrograma.setText("No se pudo agregar programa");
                                 lblErrorCrearPrograma.setVisible(true);
@@ -1943,11 +2199,13 @@ public class Main extends javax.swing.JFrame {
                         }
                        else
                        {
+                           
                            lblErrorCrearPrograma.setText("La duración del programa debe ser mayor a 0");
                        }
                    }
                    catch(Exception ex)
                    {
+                       System.out.println(ex.getMessage());
                       lblErrorCrearPrograma.setText("Ingrese un número valido para la duración del programa"); 
                    }
                 }          
@@ -1960,14 +2218,28 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCrearProgramaActionPerformed
 
-    private void btnVolverCrearProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverCrearProgramaActionPerformed
-        volverMenu();
-    }//GEN-LAST:event_btnVolverCrearProgramaActionPerformed
-
     private void btnCambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarClaveActionPerformed
- 
-        int id = Integer.parseInt(txtIdVigencia.getText());
+        if(!txtIdVigencia.getText().equals(""))
+        {
+             int id = Integer.parseInt(txtIdVigencia.getText());
         Usuario user = null;
+        String contrasenia = "default"+id;
+        c.setContrasenia("zuxtuezhmzzvillc");
+        c.setUsuarioCorreo("seba.32@gmail.com");
+        c.setAsunto("Reinicio Contraseña");
+        c.setMensaje("Su contraseña fue inicializada, la nueva contraseña es: "+ contrasenia);
+        c.setDestino("seba.32@gmail.com");
+        ControladorCorreo controlador = new ControladorCorreo();
+        if(controlador.enviarCorreo(c))
+        {
+            JOptionPane.showMessageDialog(null, "Correo con contraseña enviado");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo enviar correo");
+        }
+        
+        
         try {
             user = cnn.selectUsuario(id);
         } catch (SQLException ex) {
@@ -1977,7 +2249,7 @@ public class Main extends javax.swing.JFrame {
         
         if (user != null) {
             lblErrorVigencia.setVisible(false);
-            user.setContrasena(txtCambiarClave.getText());
+            user.setContrasena(contrasenia);
             int res = cnn.insertUpdateUsuario(user, "set");
             if (res > 0) {
                 limpiarTablaUsuario();
@@ -1990,7 +2262,144 @@ public class Main extends javax.swing.JFrame {
             lblErrorVigencia.setText("ID no existente");
             lblErrorVigencia.setVisible(true);
         }
+        }
+       
     }//GEN-LAST:event_btnCambiarClaveActionPerformed
+
+    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
+        if (lblEstado.getText().equals("Publicado")) {
+            String cel = String.valueOf(cbCelPublicar.getSelectedItem());
+            String[] celFinal = cel.split("-");
+            int idCel = Integer.parseInt(celFinal[0]);
+            String programa = String.valueOf(cbProgramas.getSelectedItem());
+            String[] programaFinal = programa.split("-");
+            int idPrograma = Integer.parseInt(programaFinal[0]);
+            int duracion = cnn.traerDuracionPrograma(idPrograma);
+            Programa publicar = new Programa(idPrograma, programaFinal[1], duracion,idCel,0);
+
+            if(cnn.insertUpdatePrograma(publicar, "set") > 0)
+            {
+                lblErrorPublicar.setText("Programa "+programaFinal[1]+" publicado correctamente");
+            }
+            else
+            {
+                lblErrorPublicar.setText("Error al publicar programa" );
+            }
+        }
+        else
+        {
+            lblErrorPublicar.setText("Primero debe publicarse el Programa");
+        }
+        
+        
+    }//GEN-LAST:event_btnAsignarActionPerformed
+
+    private void btnVolverProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProgramaActionPerformed
+        volverMenu();
+    }//GEN-LAST:event_btnVolverProgramaActionPerformed
+
+    private void btnPostulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostulacionesActionPerformed
+        jPanel3.setVisible(false);
+        pPanelPostulacion.setVisible(true);
+        cnn.comboBoxAlumno(cbAlumnoPost);
+        cnn.comboBoxPrograma(cbProgramaPost);
+        
+    }//GEN-LAST:event_btnPostulacionesActionPerformed
+
+    private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
+        String rut = String.valueOf(cbAlumnoPost.getSelectedItem());
+        String[] rutFinal = rut.split("-");
+        int estado = 0;
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        java.util.Date fechaHoy = today.getTime();
+        java.sql.Date fecha_postulacion = new java.sql.Date(fechaHoy.getTime());
+        String programa = String.valueOf(cbProgramaPost.getSelectedItem());
+        String[] programaFinal = programa.split("-");
+        int idPrograma = Integer.parseInt(programaFinal[0]);
+        Postulacion postulacion = new Postulacion(0,fecha_postulacion,estado,rutFinal[0],idPrograma);
+        cnn.insertUpdatePostulacion(postulacion, "do");
+    }//GEN-LAST:event_btnPostularActionPerformed
+
+    private void btnPublicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublicarActionPerformed
+        String programa = String.valueOf(cbProgramas.getSelectedItem());
+        String[] programa2 = programa.split("-");
+        int idPrograma = Integer.parseInt(programa2[0]);
+        if(cnn.cambiarEstado(idPrograma) == 0)
+        {
+            lblErrorPublicar.setText("No se pudo realizar la publicación");
+        }
+        else
+        {
+            lblErrorPublicar.setText("Publicación Realizada");
+        }      
+    }//GEN-LAST:event_btnPublicarActionPerformed
+
+    private void btnVolverPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverPostActionPerformed
+        volverMenu(); 
+    }//GEN-LAST:event_btnVolverPostActionPerformed
+
+    private void cbProgramasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProgramasActionPerformed
+        // TODO add your handling code here:
+        String programa = String.valueOf(cbProgramas.getSelectedItem());
+        String[] programa2 = programa.split("-");
+        int idPrograma = Integer.parseInt(programa2[0]);
+        int estado = cnn.traerEstadoPrograma(idPrograma);
+        if (estado == 1 ) {
+            lblEstado.setText("Publicado");
+        }
+        else
+        {
+            lblEstado.setText("Sin Publicar");
+        }
+    }//GEN-LAST:event_cbProgramasActionPerformed
+
+    private void cbAlumnoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlumnoAsignarActionPerformed
+        String alumno = String.valueOf(cbAlumnoAsignar.getSelectedItem());
+        String[] rut_alumno = alumno.split("-");      
+        String rut_familia = cnn.traerRutFamiliaAsignada(rut_alumno[0]);
+        System.out.println(rut_familia);
+        if (rut_familia != null) {
+            String datosFamilia = cnn.traerFamiliaActual(rut_familia);
+            System.out.println(datosFamilia);
+            if (datosFamilia != null) {
+                lblFamiliaActual.setText(datosFamilia);
+            }
+            else
+            {
+                lblFamiliaActual.setText("Familia Asignada no tiene Datos");
+            }
+        }
+        else
+        {
+            System.out.println("alo");
+            lblFamiliaActual.setText("Sin Familia Asignada");
+        }
+
+
+    }//GEN-LAST:event_cbAlumnoAsignarActionPerformed
+
+    private void btnVolverPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverPersonaActionPerformed
+        volverMenu();
+    }//GEN-LAST:event_btnVolverPersonaActionPerformed
+
+    private void btnAsignarFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarFamiliaActionPerformed
+        String alumno = String.valueOf(cbAlumnoAsignar.getSelectedItem());
+        String[] rut_alumno = alumno.split("-");     
+        String familia = String.valueOf(cbFamiliaAsignar.getSelectedItem());
+        String[] rut_familia = familia.split("-");
+        Alumno a = cnn.traerAlumno(rut_alumno[0]);
+        a.setNota(5);
+        a.setRut_familia(rut_familia[0]);
+        if (cnn.insertUpdateAlumno(a, "set") != 0) {
+            lblErrorAsignar.setText("Alumno Asignado a familia con exito");
+        }
+        else
+        {
+            lblErrorAsignar.setText("No se pudo Asignar alumno");
+        }
+
+    }//GEN-LAST:event_btnAsignarFamiliaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2031,6 +2440,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TabPersona;
     private javax.swing.JButton btnAdministrarCentros;
     private javax.swing.JButton btnArchivos;
+    private javax.swing.JButton btnAsignar;
+    private javax.swing.JButton btnAsignarFamilia;
     private javax.swing.JButton btnCambiarClave;
     private javax.swing.JButton btnCambiarVigencia;
     private javax.swing.JButton btnCrearCentro;
@@ -2047,23 +2458,31 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarPersona;
     private javax.swing.JButton btnModificarRol;
     private javax.swing.JButton btnPaises;
+    private javax.swing.JButton btnPostulaciones;
+    private javax.swing.JButton btnPostular;
     private javax.swing.JButton btnPrograma;
+    private javax.swing.JButton btnPublicar;
     private javax.swing.JButton btnRoles;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton btnVolver1;
-    private javax.swing.JButton btnVolverCrearPrograma;
     private javax.swing.JButton btnVolverMenuPersona;
+    private javax.swing.JButton btnVolverPersona;
+    private javax.swing.JButton btnVolverPost;
+    private javax.swing.JButton btnVolverPrograma;
     private javax.swing.JButton btnVolverUsuario;
+    private javax.swing.JComboBox<String> cbAlumnoAsignar;
+    private javax.swing.JComboBox<String> cbAlumnoPost;
     private javax.swing.JComboBox<String> cbCelPrograma;
     private javax.swing.JComboBox<String> cbCelPublicar;
+    private javax.swing.JComboBox<String> cbFamiliaAsignar;
+    private javax.swing.JComboBox<String> cbProgramaPost;
     private javax.swing.JComboBox<String> cbProgramas;
     private javax.swing.JComboBox<String> cbRol;
     private javax.swing.JComboBox<String> cbRutPersona;
     private javax.swing.JComboBox<String> cmbEncargado;
     private javax.swing.JComboBox<String> cmbPaisCentro;
     private com.toedter.calendar.JDateChooser dFechaNacimiento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
@@ -2101,7 +2520,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2113,7 +2536,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -2131,17 +2553,24 @@ public class Main extends javax.swing.JFrame {
     private java.awt.Label label2;
     private javax.swing.JLabel lblBuscarUsuario;
     private javax.swing.JLabel lblContrasena;
+    private javax.swing.JLabel lblErrorAsignar;
     private javax.swing.JLabel lblErrorCrearPrograma;
     private javax.swing.JLabel lblErrorCrearUsuario;
+    private java.awt.Label lblErrorPublicar;
     private javax.swing.JLabel lblErrorVigencia;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFamiliaActual;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel pPanelAdminUsuario;
+    private javax.swing.JPanel pPanelAsignar;
+    private javax.swing.JPanel pPanelAsignarFamilia;
     private javax.swing.JPanel pPanelCentros;
     private javax.swing.JPanel pPanelCrearPrograma;
     private javax.swing.JPanel pPanelCrearUsuario;
     private javax.swing.JPanel pPanelLogin;
     private javax.swing.JPanel pPanelPais;
     private javax.swing.JPanel pPanelPersona;
+    private javax.swing.JPanel pPanelPostulacion;
     private javax.swing.JPanel pPanelPrograma;
     private javax.swing.JPanel pPanelRol;
     private javax.swing.JPanel pPanelUsuario;
@@ -2165,7 +2594,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscarCentro;
     private javax.swing.JTextField txtBuscarPersona;
     private javax.swing.JTextField txtBuscarUsuario;
-    private javax.swing.JTextField txtCambiarClave;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDireccionCentro;
     private java.awt.TextField txtDuracionCrearPrograma;

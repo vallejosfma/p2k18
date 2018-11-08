@@ -14,12 +14,24 @@ public class Programa {
     private String nombre_programa;
     private int duracion_programa;
     private int id_cel;
+    private int estado_publicacion;
 
-    public Programa(int id_programa, String nombre_programa, int duracion_programa, int id_cel) {
+    public Programa(int id_programa, String nombre_programa, int duracion_programa, int id_cel, int estado_publicacion) {
         this.id_programa = id_programa;
         this.nombre_programa = nombre_programa;
         this.duracion_programa = duracion_programa;
         this.id_cel = id_cel;
+        this.estado_publicacion = estado_publicacion;
+    }
+
+    
+    
+    public int getEstado_publicacion() {
+        return estado_publicacion;
+    }
+
+    public void setEstado_publicacion(int estado_publicacion) {
+        this.estado_publicacion = estado_publicacion;
     }
 
     

@@ -13,15 +13,28 @@ import java.sql.Date;
  */
 public class Postulacion {
     private int id_postulacion;
-    private Date fecha_postulacion;
+    private java.sql.Date fecha_postulacion;
+    private int Estado;
     private String persona_rut;
     private int id_programa;
 
-    public Postulacion(int id_postulacion, Date marca_temporal, String alumno_rut, int id_programa) {
+    public Postulacion(int id_postulacion, java.sql.Date fecha_postulacion, int Estado, String persona_rut, int id_programa) {
         this.id_postulacion = id_postulacion;
-        this.fecha_postulacion = marca_temporal;
-        this.persona_rut = alumno_rut;
+        this.fecha_postulacion = fecha_postulacion;
+        this.Estado = Estado;
+        this.persona_rut = persona_rut;
         this.id_programa = id_programa;
+    }
+
+    
+    
+    
+    public int getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(int Estado) {
+        this.Estado = Estado;
     }
 
     public int getId_postulacion() {
@@ -54,6 +67,11 @@ public class Postulacion {
 
     public void setId_programa(int id_programa) {
         this.id_programa = id_programa;
+    }
+
+    @Override
+    public String toString() {
+        return "Postulacion{" + "id_postulacion=" + id_postulacion + ", fecha_postulacion=" + fecha_postulacion + ", Estado=" + Estado + ", persona_rut=" + persona_rut + ", id_programa=" + id_programa + '}';
     }
     
     

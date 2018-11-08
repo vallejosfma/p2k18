@@ -127,6 +127,29 @@ public class Conexion {
            
         }
     }
+    public void comboBoxAlumno(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT T1.RUT, TRIM(T1.NOMBRE||' '||T1.APELLIDO_PATERNO||' '||T1.APELLIDO_MATERNO) FROM PERSONA T1 INNER JOIN ALUMNO T2 ON T1.RUT = t2.rut order by t1.rut");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta Alumno"+ex);
+           
+        }
+    }
+    public void comboBoxFamilia(JComboBox combo){
+        
+        try{
+            PreparedStatement sentencia = cn.prepareStatement("SELECT T1.RUT, TRIM(T1.NOMBRE||' '||T1.APELLIDO_PATERNO||' '||T1.APELLIDO_MATERNO) FROM PERSONA T1 INNER JOIN FAMILIA T2 ON T1.RUT = t2.rut order by t1.rut");
+            ResultSet resultado = sentencia.executeQuery();
+            c.cargarComboBox(resultado, combo);
+        }catch(Exception ex){
+            System.out.println("Error al ejecutar consulta Familia"+ex);
+           
+        }
+    }
+    
     public void comboBoxRol(JComboBox combo){
         
         try{
@@ -190,23 +213,7 @@ public class Conexion {
            
         }
     }
-    
-//    public int traerRolSegunNombre(String nombre)
-//    {
-//        int id = 0;
-//        try{
-//            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_ROL FROM ROL WHERE NOMBRE_ROL = '"+nombre+"'");
-//            ResultSet res = sentencia.executeQuery();
-//            while (res.next()) {
-//                id = Integer.parseInt(res.getNString(1));
-//            }
-//        }
-//        catch(Exception ex)
-//        {
-//            System.out.println(ex.getMessage());
-//        }
-//        return id;
-//    }
+
     public Usuario selectUsuario(int id_usuario) throws SQLException
     {
         Usuario datosUsuario = null;
@@ -229,7 +236,93 @@ public class Conexion {
         return datosUsuario;
     }
     
-    
+    public int traerDuracionPrograma(int idPrograma)
+    {
+        int duracion = 0;
+        try
+        {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT DURACION_PROGRAMA FROM PROGRAMA_ESTUDIO WHERE ID_PRO='"+idPrograma+"'");
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                duracion = rs.getInt(1);
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al traer duracion del programa: " + idPrograma);
+        }
+        return duracion;
+    }
+    public int traerEstadoPrograma(int idPrograma)
+    {
+        int duracion = 0;
+        try
+        {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ESTADO_PUBLICACION FROM PROGRAMA_ESTUDIO WHERE ID_PRO='"+idPrograma+"'");
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                duracion = rs.getInt(1);
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al traer duracion del programa: " + idPrograma);
+        }
+        return duracion;
+    }
+    public String traerRutFamiliaAsignada(String rut_alumno)
+    {
+        String familia = "";
+        try
+        {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT_FAMILIA FROM ALUMNO WHERE RUT ='"+rut_alumno+"'");
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                familia = rs.getString(1);
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al traer familia actual: " + familia);
+        }
+        return familia;
+    }
+    public String traerFamiliaActual(String rut_familia)
+    {
+        String familia = "";
+        try
+        {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT RUT,TRIM(T1.NOMBRE||' '||T1.APELLIDO_PATERNO||' '||T1.APELLIDO_MATERNO) FROM PERSONA T1 INNER JOIN FAMILIA T2 WHERE RUT='"+rut_familia+"'");
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                familia = rs.getString(1);
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al traer nombre familia actual: " + rut_familia);
+        }
+        return familia;
+    }
+    public int cambiarEstado(int idPrograma)
+    {
+         int flag = 0;
+        try
+        {
+            PreparedStatement sentencia = cn.prepareStatement("UPDATE PROGRAMA_ESTUDIO SET ESTADO_PUBLICACION = 1 WHERE ID_PRO = '"+idPrograma+"'");
+            flag = sentencia.executeUpdate();
+ 
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error al traer duracion del programa: " + idPrograma);
+        }
+        return flag;
+    }
      public void BuscarAlumnos(DefaultTableModel model,JTable tabla,String dato){
         
         try{
@@ -297,6 +390,35 @@ public class Conexion {
         }
         return value;
     }
+     public Object[] traerUsuario(String id_usuario){
+        Object[] datos = new Object[2];
+        try {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT ID_USUARIO, VIGENCIA FROM USUARIO WHERE ID_USUARIO = ?");
+            sentencia.setString(1,id_usuario);
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                datos[0] = rs.getInt(1);//rut
+                datos[1] = rs.getInt(2);//nombre
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar"+e);
+        }
+        return datos;
+    }
+      public Alumno traerAlumno(String rut_alumno){
+        Alumno a = null;
+        try {
+            PreparedStatement sentencia = cn.prepareStatement("SELECT NACIONALIDAD FROM ALUMNO WHERE RUT = ?");
+            sentencia.setString(1,rut_alumno);
+            ResultSet rs = sentencia.executeQuery();
+            while(rs.next()){
+                a = new Alumno(rut_alumno, rs.getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar"+e);
+        }
+        return a;
+    }
     public int insertUpdatePersona(Persona persona, String tipo)
     {
         int flag = 0;
@@ -342,7 +464,27 @@ public class Conexion {
         }
         return flag;
     }
-     
+    public int insertUpdateAlumno(Alumno a, String tipo)
+    {
+        int flag = 0;
+        
+        try {
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_ALUMNO (?,?,?,?,?)} ");
+            cst.setString("TIPO", tipo);
+            cst.setString("P_RUT", a.getRut());
+            cst.setString("P_NACIONALIDAD", a.getNacionalidad());
+            cst.setDouble("P_NOTA",a.getNota());
+            cst.setString("p_RUT_FAMILIA", a.getRut_familia());
+            flag = cst.executeUpdate();
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+            return 0;
+        }
+        
+        return flag;
+    }
     public boolean verificarUsuario(String usuario, String contrasena)
     {
         try {
@@ -542,15 +684,19 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_POSTULACION (?,?,?,?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_POSTULACION (?,?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
             cst.setInt("p_ID_POSTULACION", postulacion.getId_postulacion());
             cst.setDate("p_FECHA_POSTULACION", postulacion.getFecha_postulacion());
+            cst.setInt("p_ESTADO", postulacion.getEstado());
             cst.setString("p_PERSONA_RUT", postulacion.getPersona_rut());
-            cst.setInt("p_PROGRAMA_ESTUDIO_ID_PROGRAMA", postulacion.getId_programa());
+            cst.setInt("p_PRO_EST_ID_PRO", postulacion.getId_programa());
+            System.out.println(" "+ postulacion.toString());
             flag= cst.executeUpdate();
+            System.out.println("numero:"+ flag);
 
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return 0;
         }
         return flag;
@@ -561,16 +707,18 @@ public class Conexion {
     {
         int flag = 0;
         try {
-            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PROGRAMA_ESTUDIO (?,?,?,?,?)} ");
+            CallableStatement cst = cn.prepareCall("{call SP_DO_SET_DEL_PROGRAMA_ESTUDIO (?,?,?,?,?,?)} ");
             cst.setString("TIPO", tipo);
             cst.setInt("p_ID_PRO", programa.getId_programa());
             cst.setString("p_NOMBRE_PROGRAMA", programa.getNombre_programa());
             cst.setInt("p_DURACION_PROGRAMA", programa.getDuracion_programa());
             cst.setInt("p_CEL_ID_CEL", programa.getId_cel());
+            cst.setInt("p_ESTADO_PUBLICACION", programa.getEstado_publicacion());
 
             flag= cst.executeUpdate();
 
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return 0;
         }
         return flag;
@@ -592,7 +740,7 @@ public class Conexion {
         }
         return flag;
     }
-
+        
     
     //Usuario
     public int insertUpdateUsuario(Usuario usuario, String tipo)

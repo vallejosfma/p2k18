@@ -13,16 +13,36 @@ import java.sql.Date;
  */
 public class Alumno {
 
+    private String rut;
+    private String nacionalidad;
+    private String rut_familia;
+    private double nota;
+
+    public double getNota() {
+        return nota;
+    }
+
+    public void setNota(double nota) {
+        this.nota = nota;
+    }
+
+
+    public String getRut_familia() {
+        return rut_familia;
+    }
+
+    public void setRut_familia(String rut_familia) {
+        this.rut_familia = rut_familia;
+    }
+
 
     
-    String rut;
-    String nacionalidad;
-
-
     public Alumno(String rut, String nacionalidad)
     {
         this.rut = rut;
         this.nacionalidad = nacionalidad;
+        rut_familia = "";
+        nota = 0;
     }
     
     public String getRut() {
